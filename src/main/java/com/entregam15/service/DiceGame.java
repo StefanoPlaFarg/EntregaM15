@@ -36,7 +36,7 @@ import lombok.Setter;
 
 @Component
 
-public class Game {
+public class DiceGame {
 
 	private int valueFirstDice;
 	private int valueSecondDice;
