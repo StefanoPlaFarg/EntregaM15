@@ -46,4 +46,7 @@ public class User {
 	 
 	 @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	 private List<Game> listGames;
+	 
+	 @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	 private List<TotalGames> listTotalGames;
 }
