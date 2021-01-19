@@ -20,5 +20,6 @@ public class GameDTO {
     private int valueFirstDice;	
 	private int valueSecondDice;	
 	private int totalValue;
+	private boolean gameWon;
 	
 }
