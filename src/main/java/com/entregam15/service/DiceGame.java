@@ -39,17 +39,18 @@ public class DiceGame {
 	private int valueFirstDice;
 	private int valueSecondDice;
 	private int totalValueGame;
+	private boolean isGameWon;
 	/**
 	 * Metode que retorna un boolea (true) si els dos daus tirats sumen 7
 	 * @return
 	 */
-	public boolean isGameWon() {
+	public void play() {
 
 		valueFirstDice = (int) ((Math.random() * 5) + 1);
 		valueSecondDice = (int) ((Math.random() * 5) + 1);
 		totalValueGame = valueFirstDice + valueSecondDice;
+		isGameWon=totalValueGame==7;
 		
-		return totalValueGame == 7;
 
 	}
 	
