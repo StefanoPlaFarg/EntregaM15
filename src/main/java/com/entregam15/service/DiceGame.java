@@ -34,8 +34,6 @@ import lombok.Setter;
 @Setter
 @Builder
 
-@Component
-
 public class DiceGame {
 
 	private int valueFirstDice;
