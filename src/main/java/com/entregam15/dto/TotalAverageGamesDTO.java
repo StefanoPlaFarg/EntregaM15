@@ -16,7 +16,7 @@ import lombok.Setter;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class TotalGamesDTO {
+public class TotalAverageGamesDTO {
 	
 	private List<TotalGamesUserDTO> listTotalGamesUser;
 
