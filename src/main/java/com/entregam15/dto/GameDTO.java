@@ -16,8 +16,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class GameDTO {
 
-	private Long idGame;
-	private String userName;	
+	private Long idGame;		
     private int valueFirstDice;	
 	private int valueSecondDice;	
 	private int totalValue;
