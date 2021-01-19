@@ -13,7 +13,7 @@ import com.entregam15.entity.TotalGames;
  */
 
 @Repository
-public interface TotalGamesRepository extends JpaRepository<TotalGames, Long>{
+public interface RankingRepository extends JpaRepository<TotalGames, Long>{
 
 
 	
