@@ -43,5 +43,8 @@ public class Game {
 	@Column(name="TOTAL_VALUE", nullable = false)
 	private int totalValue;
 	
+	@Column(name="GAME_WON", nullable = false)
+	private boolean gameWon;
+	
 
 }
