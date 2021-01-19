@@ -18,6 +18,6 @@ import lombok.Setter;
 @NoArgsConstructor
 public class TotalAverageGamesDTO {
 	
-	private List<TotalGamesUserDTO> listTotalGamesUser;
+	private List<TotalGamesDTO> listTotalGamesUser;
 
 }
