@@ -40,7 +40,7 @@ public class DiceGame {
 
 	private int valueFirstDice;
 	private int valueSecondDice;
-
+	private int totalValueGame;
 	/**
 	 * Metode que retorna un boolea (true) si els dos daus tirats sumen 7
 	 * @return
@@ -49,7 +49,9 @@ public class DiceGame {
 
 		valueFirstDice = (int) ((Math.random() * 5) + 1);
 		valueSecondDice = (int) ((Math.random() * 5) + 1);
-		return (valueFirstDice + valueSecondDice) == 7;
+		totalValueGame = valueFirstDice + valueSecondDice;
+		
+		return totalValueGame == 7;
 
 	}
 	
