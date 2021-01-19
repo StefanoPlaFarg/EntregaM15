@@ -6,6 +6,7 @@ package com.entregam15.mapper;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.entregam15.dto.AverageRankingDTO;
 import com.entregam15.dto.GameDTO;
 import com.entregam15.dto.GamesUserDTO;
 import com.entregam15.dto.TotalAverageGamesDTO;
@@ -22,8 +23,10 @@ public class TotalGamesMapper extends AbstractMapper<TotalGames, TotalGamesDTO> 
 
 	@Override
 	public TotalGamesDTO fromEntity(TotalGames entity) {
-		return TotalGamesDTO.builder().userName(entity.getUser().getUserName())
-				.averageRankingUser(entity.getAverageSuccess()).build();
+		return TotalGamesDTO.builder()
+				.userName(entity.getUser().getUserName())
+				.averageRankingUser(entity.getAverageSuccess())
+				.build();
 	}
 
 	private List<TotalGamesDTO> fromAllEntities(List<TotalGames> listTotalGames) {
@@ -38,8 +41,19 @@ public class TotalGamesMapper extends AbstractMapper<TotalGames, TotalGamesDTO> 
 
 	public TotalAverageGamesDTO fromAllTotalGamesEntities(List<TotalGames> listTotalGames) {
 
-		return TotalAverageGamesDTO.builder().listTotalGamesUser(fromAllEntities(listTotalGames)).build();
+		return TotalAverageGamesDTO.builder()
+				.listTotalGamesUser(fromAllEntities(listTotalGames))
+				.build();
 
 	}
+	
+	public AverageRankingDTO fromAverageRanking(double averageRanking) {
+
+		return AverageRankingDTO.builder()
+				.averageRanking(averageRanking)
+				.build();
+
+	}
+	
 
 }
