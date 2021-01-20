@@ -12,7 +12,7 @@ import com.entregam15.exception.ValidateServiceException;
  */
 public class UserValidator {
 	
-	public static void signup(User user) {
+	public static void validateUser(User user) {
 		
 				
 		if(user.getPassword() == null || user.getPassword().isEmpty()) {
