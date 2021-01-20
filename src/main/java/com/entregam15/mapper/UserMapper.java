@@ -35,7 +35,7 @@ public class UserMapper extends AbstractMapper<User, UserDTO>{
 				.build();
 	}
 
-	public User signup(SignupRequestDTO dto) {
+	public User signUp(SignupRequestDTO dto) {
 		
 		String userName;
 		
