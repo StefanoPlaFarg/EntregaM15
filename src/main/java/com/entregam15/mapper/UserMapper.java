@@ -29,8 +29,9 @@ public class UserMapper extends AbstractMapper<User, UserDTO>{
 	}
 
 	
-	public User fromDTO(UserRequestDTO dto) {
-		return User.builder()				
+	public User fromDTO(UserDTO dto) {
+		return User.builder()
+				.id(dto.getId())
 				.userName(dto.getUsername())
 				.build();
 	}
