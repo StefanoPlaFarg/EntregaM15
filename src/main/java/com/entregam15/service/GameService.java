@@ -189,7 +189,7 @@ public class GameService {
 	}
 	
        
-       public void deleteAllRankingsByUser(User user) {
+       private void deleteAllRankingsByUser(User user) {
    		try {
    			
    			if ( user.getTotalGames()==null )new NoDataFoundException("The user has no games");
