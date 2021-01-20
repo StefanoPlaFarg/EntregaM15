@@ -40,7 +40,7 @@ public class GameMapper extends AbstractMapper<Game, GameDTO> {
 	}
 	
 	
-	public GamesUserDTO fromAllEntitiesByUSer (User user, List<Game> listGames) {
+	public GamesUserDTO fromAllEntitiesByUser (User user, List<Game> listGames) {
 		
 		return GamesUserDTO.builder()
 				.userName(user.getUserName())
