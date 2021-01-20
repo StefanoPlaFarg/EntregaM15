@@ -8,6 +8,7 @@ import java.time.format.DateTimeFormatter;
 
 import com.entregam15.dto.SignupRequestDTO;
 import com.entregam15.dto.UserDTO;
+import com.entregam15.dto.UserRequestDTO;
 import com.entregam15.entity.User;
 
 /**
@@ -28,7 +29,7 @@ public class UserMapper extends AbstractMapper<User, UserDTO>{
 	}
 
 	
-	public User fromDTO(UserDTO dto) {
+	public User fromDTO(UserRequestDTO dto) {
 		return User.builder()				
 				.userName(dto.getUsername())
 				.build();
