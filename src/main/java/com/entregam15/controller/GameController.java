@@ -54,20 +54,27 @@ public class GameController {
 	
 	//Users
 	@PostMapping(value = "POST/players/")
-	public void createUser() {
-		
-		
-		
+	public ResponseEntity<WrapperResponse<UserDTO>> createUser(@RequestBody SignupRequestDTO signupDTO) {
+
+		User userToCreate = userMapper.signUp(signupDTO);
+
+		User userCreated = userService.createUser(userToCreate);
+
+		return new WrapperResponse<>(true, "success", userMapper.fromEntity(userCreated)).createResponse();
+
 	}
 	
 	@PutMapping(value = "PUT/players/")
     public ResponseEntity<WrapperResponse<UserDTO>> updateUser(@RequestBody UserDTO userDTO) {
 		
-		return null;
+		User userToUpdate = userMapper.fromDTO(userDTO);
+	
+		User userUpdated = userService.updateUser(userToUpdate);
+		
+		return new WrapperResponse<>(true, "success", userMapper.fromEntity(userUpdated)).createResponse();
 	}
 	
 	//Game
-	
 	
 	@PostMapping(value = "POST/players/{id}/games")
 	public ResponseEntity<WrapperResponse<GameDTO>> play(@PathVariable(name="id") Long id){
