@@ -58,7 +58,7 @@ public class GameService {
 
 			gameRepository.save(game);
 			
-			// Update and save the Average Success into ranking Repository
+			//Update and save the Average Success into ranking Repository
 			TotalGames totalGames = user.getTotalGames();
 			totalGames.setAverageSuccess(calcUpdatedRanking(user));
 			rankingRepository.save(totalGames);			
@@ -100,7 +100,7 @@ public class GameService {
 	}
 	
 
-	public List<Game> findAllGamesbyUser(User user) {
+	public List<Game> findAllGamesByUser(User user) {
 		try {
             
 			if (user.getListGames()==null) new NoDataFoundException("The user has no games");
