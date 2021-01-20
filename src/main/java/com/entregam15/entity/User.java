@@ -42,12 +42,12 @@ public class User {
 	 @Column(name="PASSWORD", nullable = false)
 	 private String password;
 	 
-	 @Column(name="REGISTRATION DATE", nullable = false)
+	 @Column(name="REGISTRATION_DATE", nullable = false)
 	 private LocalDateTime registrationDate;
 	 
-	 @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	 @OneToMany(mappedBy = "user",  fetch = FetchType.LAZY)
 	 private List<Game> listGames;
 	 
-	 @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	 @OneToOne(mappedBy = "user",  fetch = FetchType.LAZY)
 	 private TotalGames totalGames;
 }

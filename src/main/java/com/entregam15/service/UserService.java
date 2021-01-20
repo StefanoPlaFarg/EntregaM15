@@ -40,7 +40,7 @@ public class UserService {
 
 			UserValidator.validateUser(user);
 			
-			User existUser = userRepository.findByUsername(user.getUserName()).orElse(null);
+			User existUser = userRepository.findByUserName(user.getUserName()).orElse(null);
 			
 			if(existUser != null) throw new ValidateServiceException("This user alreay exists");
 			
@@ -77,7 +77,7 @@ public class UserService {
 
 	}
 	
-	
+	@Transactional
 	public User updateUser(User user) {
 		try {
 

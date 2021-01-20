@@ -6,6 +6,8 @@ package com.entregam15.mapper;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.stereotype.Component;
+
 import com.entregam15.dto.GameDTO;
 import com.entregam15.dto.GamesUserDTO;
 import com.entregam15.entity.Game;
@@ -16,6 +18,8 @@ import com.entregam15.entity.User;
  * @author stefano
  *
  */
+
+@Component
 public class GameMapper extends AbstractMapper<Game, GameDTO> {
    
 	@Override

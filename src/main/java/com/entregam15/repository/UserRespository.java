@@ -16,6 +16,6 @@ import com.entregam15.entity.User;
 @Repository
 public interface UserRespository extends JpaRepository<User, Long>{
 
-	public Optional<User> findByUsername(String username);
+	public Optional<User> findByUserName(String userName);
 	
 }

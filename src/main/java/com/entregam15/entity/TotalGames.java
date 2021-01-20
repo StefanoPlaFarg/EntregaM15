@@ -6,6 +6,8 @@ package com.entregam15.entity;
 
 import javax.persistence.*;
 
+
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -28,9 +30,9 @@ public class TotalGames {
 	@Id
 	@Column(name="ID")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private Long id;	
 	
-	@OneToOne
+	@OneToOne (fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name="FK_USER", nullable = false)
 	private User user;
 	

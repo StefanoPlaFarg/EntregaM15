@@ -10,6 +10,8 @@ package com.entregam15.entity;
 
 import javax.persistence.*;
 
+
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -30,7 +32,8 @@ public class Game {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@ManyToOne
+		
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name="FK_USER", nullable = false)
 	private User user;
 	
