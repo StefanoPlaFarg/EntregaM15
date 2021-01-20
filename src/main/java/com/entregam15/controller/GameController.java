@@ -56,11 +56,14 @@ public class GameController {
 	@PostMapping(value = "POST/players/")
 	public void createUser() {
 		
+		
+		
 	}
 	
 	@PutMapping(value = "PUT/players/")
-    public void updateUser() {
+    public ResponseEntity<WrapperResponse<UserDTO>> updateUser(@RequestBody UserDTO userDTO) {
 		
+		return null;
 	}
 	
 	//Game
