@@ -108,8 +108,8 @@ public class GameController {
 	@GetMapping(value = "GET/players/{id}/games")
 	public ResponseEntity<WrapperResponse<GamesUserDTO>> findAllGamesByUser(
 			@RequestParam(name = "pageNumber", required = false, defaultValue = "0") int pageNumber,
-			@RequestParam(name = "pageSize", required = false, defaultValue = "5") int pageSize
-			){
+			@RequestParam(name = "pageSize", required = false, defaultValue = "5") int pageSize,
+			@PathVariable(name="id") Long id){
 		
 		Pageable page = PageRequest.of(pageNumber, pageSize);
 		User user = userService.findById(id);
