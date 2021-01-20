@@ -19,6 +19,7 @@ import com.entregam15.entity.User;
 @Repository
 public interface GameRepository extends JpaRepository<Game, Long>{
 
-	public Optional<User> findByUser(User user);
+	public Optional<Game> findByUser(User user);
+	
 	
 }
