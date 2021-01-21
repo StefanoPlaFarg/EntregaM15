@@ -59,7 +59,7 @@ public class UserMapper extends AbstractMapper<User, UserDTO>{
 		return User.builder()
 				.userName(userName )
 				.password(dto.getPassword())
-				.registrationDate(regDate.now())
+				.registrationDate(regDate)
 				.build();
 	}
 	
