@@ -3,6 +3,7 @@
  */
 package com.entregam15.mapper;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -42,6 +43,7 @@ public class UserMapper extends AbstractMapper<User, UserDTO>{
 	public User signUp(SignupRequestDTO dto) {
 		
 		String userName;
+		regDate  = LocalDateTime.now();
 		
 		if (dto.getUsername().isEmpty()) {
 			
