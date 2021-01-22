@@ -29,6 +29,7 @@ public class GameMapper extends AbstractMapper<Game, GameDTO> {
                 .valueSecondDice(entity.getValueSecondDice())
 				.totalValue(entity.getTotalValue())
 				.gameWon(entity.isGameWon())
+				.idGame(entity.getId())
 				.build();
 	}
 	
