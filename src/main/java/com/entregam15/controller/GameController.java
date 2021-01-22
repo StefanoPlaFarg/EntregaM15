@@ -114,7 +114,7 @@ public class GameController {
 		Pageable page = PageRequest.of(pageNumber, pageSize);
 		User user = userService.findById(id);
 		
-		List<Game> listGamesByUser =gameService.findGamesByUser(user, page);
+		List<Game> listGamesByUser =gameService.findAllGamesByUser(user, page);
 		return new WrapperResponse<>(true, "success", gameMapper.fromAllEntitiesByUser(user, listGamesByUser))
 				.createResponse();
 	}
