@@ -60,8 +60,22 @@ public class GameService {
 			
 			//Update and save the Average Success into ranking Repository
 			TotalGames totalGames = user.getTotalGames();
-			totalGames.setAverageSuccess(calcUpdatedRanking(user));
-			rankingRepository.save(totalGames);			
+			
+			if (totalGames==null ) { // The user hasn't neither games nor totalgames yet
+             
+				TotalGames newTotalGames = TotalGames.builder()
+				.user(user)
+				.averageSuccess(calcUpdatedRanking(user))				
+				.build();			
+				
+				rankingRepository.save(newTotalGames);
+				
+			}else {
+				
+				totalGames.setAverageSuccess(calcUpdatedRanking(user));
+				rankingRepository.save(totalGames);	
+				
+			}			
 			return game;
 			
 		} catch (ValidateServiceException | NoDataFoundException e) {
@@ -72,6 +86,34 @@ public class GameService {
 			throw new GeneralServiceException(e.getMessage(), e);
 		}
 	}
+	
+	
+	private double calcUpdatedRanking(User user) {
+
+		try {
+            
+			if (user.getListGames() == null) new NoDataFoundException("The user has no games");
+			
+			int counterGamesWonByUser = user.getListGames().stream().filter(Game -> Game.isGameWon() == true)
+					.map(Game -> 1).reduce(0, (sum, value) -> sum + value);
+
+			int totalGamesByUser = user.getListGames().stream().map(Game -> 1).reduce(0, (sum, value) -> sum + value);
+
+			double updatedAverageRanking = counterGamesWonByUser / totalGamesByUser;
+
+			return updatedAverageRanking;
+
+		} catch (ValidateServiceException | NoDataFoundException e) {
+			log.info(e.getMessage(), e);
+			throw e;
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			throw new GeneralServiceException(e.getMessage(), e);
+		}
+
+	}
+	
+	
 	
 	
 	
@@ -155,38 +197,7 @@ public class GameService {
 	
 	
 	  
-       private double calcUpdatedRanking (User user) {
-		
-			try {
-
-				if (user.getTotalGames() == null) {// The user hasn't neither games nor totalgames yet
-
-					return 0.0;
-
-				} else {
-
-					int counterGamesWonByUser = user.getListGames().stream().filter(Game -> Game.isGameWon() == true)
-							.map(Game -> 1).reduce(0, (sum, value) -> sum + value);
-
-					int totalGamesByUser = user.getListGames().stream().map(Game -> 1).reduce(0,
-							(sum, value) -> sum + value);
-
-					double updatedAverageRanking = counterGamesWonByUser / totalGamesByUser;
-
-					return updatedAverageRanking;
-
-				}
-
-   		} catch (ValidateServiceException | NoDataFoundException e) {
-   			log.info(e.getMessage(), e);
-   			throw e;
-   		} catch (Exception e) {
-   			log.error(e.getMessage(), e);
-   			throw new GeneralServiceException(e.getMessage(), e);
-   		}
-		
-		
-	}
+     
 	
        
        private void deleteAllRankingsByUser(User user) {
