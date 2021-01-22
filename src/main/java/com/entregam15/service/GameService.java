@@ -94,14 +94,17 @@ public class GameService {
             
 			if (user.getListGames() == null) new NoDataFoundException("The user has no games");
 			
-			int counterGamesWonByUser = user.getListGames().stream().filter(Game -> Game.isGameWon() == true)
-					.map(Game -> 1).reduce(0, (sum, value) -> sum + value);
+			double counterGamesWonByUser = (double)user.getListGames().stream()
+					.filter(Game -> Game.isGameWon() == true).count();
+					
+					//.map(Game -> 1)
+					//.reduce(0, (sum, value) -> sum + value);
 
-			int totalGamesByUser = user.getListGames().stream().map(Game -> 1).reduce(0, (sum, value) -> sum + value);
-
-			double updatedAverageRanking = counterGamesWonByUser / totalGamesByUser;
-
-			return updatedAverageRanking;
+			double totalGamesByUser = (double)user.getListGames().stream().count();
+					//.map(Game -> 1)
+					//.reduce(0, (sum, value) -> sum + value);
+			
+			return counterGamesWonByUser / totalGamesByUser;
 
 		} catch (ValidateServiceException | NoDataFoundException e) {
 			log.info(e.getMessage(), e);
@@ -159,14 +162,14 @@ public class GameService {
 	}
 	
 	
-	
-	
-	
-	
-	public List<Game> findGamesByUser(User user, Pageable page){
+	public List<Game> findAllGamesByUser(User user, Pageable page) {
 		try {
-						
-			return gameRepository.findAll(page).toList();
+
+			if (user.getListGames() == null)
+				new NoDataFoundException("The user has no games");
+
+			return gameRepository.findAllByUser(user, page).toList();
+
 		} catch (ValidateServiceException | NoDataFoundException e) {
 			log.info(e.getMessage(), e);
 			throw e;
