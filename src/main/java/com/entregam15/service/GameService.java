@@ -92,7 +92,7 @@ public class GameService {
 
 		try {
             
-			if (user.getListGames() == null) new NoDataFoundException("The user has no games");
+			if (user.getListGames() == null) throw new NoDataFoundException("The user has no games");
 			
 			double counterGamesWonByUser = (double)user.getListGames().stream()
 					.filter(Game -> Game.isGameWon() == true).count();
@@ -148,7 +148,7 @@ public class GameService {
 	public List<Game> findAllGamesByUser(User user) {
 		try {
             
-			if (user.getListGames()==null) new NoDataFoundException("The user has no games");
+			if (user.getListGames()==null) throw new NoDataFoundException("The user has no games");
 			
 			return user.getListGames();
 
@@ -166,7 +166,7 @@ public class GameService {
 		try {
 
 			if (user.getListGames() == null)
-				new NoDataFoundException("The user has no games");
+				throw new NoDataFoundException("The user has no games");
 
 			return gameRepository.findAllByUser(user, page).toList();
 
@@ -186,7 +186,7 @@ public class GameService {
 	public TotalGames findAverageRankingByUser(User user) {
 		try {
 			
-			if ( user.getTotalGames()==null )new NoDataFoundException("The user has no games");
+			if ( user.getTotalGames()==null )throw new NoDataFoundException("The user has no games");
 			return rankingRepository.findById(user.getTotalGames().getId()).get();
 
 		} catch (ValidateServiceException | NoDataFoundException e) {
@@ -206,7 +206,7 @@ public class GameService {
        private void deleteAllRankingsByUser(User user) {
    		try {
    			
-   			if ( user.getTotalGames()==null )new NoDataFoundException("The user has no games");
+   			if ( user.getTotalGames()==null )throw new NoDataFoundException("The user has no games");
    			rankingRepository.deleteById(user.getTotalGames().getId());
 
    		} catch (ValidateServiceException | NoDataFoundException e) {
@@ -236,7 +236,7 @@ public class GameService {
 	public List<TotalGames> findAllRankings() {
 		try {
 			
-			if (rankingRepository.findAll()==null) new NoDataFoundException("There are no games");
+			if (rankingRepository.findAll()==null) throw new NoDataFoundException("There are no games");
 			return rankingRepository.findAll();
 			
 		} catch (ValidateServiceException | NoDataFoundException e) {
@@ -251,7 +251,7 @@ public class GameService {
 	public double findAverageRanking(){
 		try {
 			
-			if (rankingRepository.findAll()==null) new NoDataFoundException("There are no games");
+			if (rankingRepository.findAll()==null) throw new NoDataFoundException("There are no games");
 			
 			double counterAverageSuccessAllUsers= rankingRepository.findAll().stream()   				      				   
   				   .map(TotalGames -> TotalGames.getAverageSuccess())    				      				   
@@ -275,14 +275,15 @@ public class GameService {
 		}
 	}
 	
+	@Transactional
 	public User findLoser() {
 		try {
+
+			if (rankingRepository.findAll().isEmpty()) 	throw new NoDataFoundException("There are no games");
 			
-            if (rankingRepository.findAll()==null) new NoDataFoundException("There are no games");
-            
-			
+
 			TotalGames worstTotalgames = TotalGames.builder().id(null).user(null).averageSuccess(1).build();
-            			
+
 			rankingRepository.findAll().stream().forEach(TotalGames -> {
 
 				if (TotalGames.getAverageSuccess() <= worstTotalgames.getAverageSuccess()) {
@@ -293,7 +294,7 @@ public class GameService {
 				}
 			});
 
-			User loser = worstTotalgames.getUser();
+			User loser = worstTotalgames.getUser();		
 
 			return loser;
 
@@ -308,9 +309,10 @@ public class GameService {
 	
 	public User findWinner() {
 		try {
-			
-			if (rankingRepository.findAll()==null) new NoDataFoundException("There are no games");
-			
+
+			if (rankingRepository.findAll().isEmpty())
+				throw new NoDataFoundException("There are no games");
+
 			User winner;
 			TotalGames bestTotalgames = TotalGames.builder().id(null).user(null).averageSuccess(0).build();
 

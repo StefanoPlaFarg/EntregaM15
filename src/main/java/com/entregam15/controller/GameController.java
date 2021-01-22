@@ -128,19 +128,19 @@ public class GameController {
 
 	
 	@GetMapping(value = "GET/players/ranking/loser")
-     public ResponseEntity<WrapperResponse<UserDTO>> findLoser() {
-		
+	public ResponseEntity<WrapperResponse<UserDTO>> findLoser() {
+
 		User loser = gameService.findLoser();
+
 		return new WrapperResponse<>(true, "success", userMapper.fromEntity(loser)).createResponse();
 	}
 	
-	
 	@GetMapping(value = "GET/players/ranking/winner")
-       public ResponseEntity<WrapperResponse<UserDTO>> findWinner() {
-		
+	public ResponseEntity<WrapperResponse<UserDTO>> findWinner() {
+
 		User winner = gameService.findWinner();
+		
 		return new WrapperResponse<>(true, "success", userMapper.fromEntity(winner)).createResponse();
 	}
-	
 
 }
