@@ -280,7 +280,7 @@ public class GameService {
 			
             if (rankingRepository.findAll()==null) new NoDataFoundException("There are no games");
             
-			User loser;
+			
 			TotalGames worstTotalgames = TotalGames.builder().id(null).user(null).averageSuccess(1).build();
             			
 			rankingRepository.findAll().stream().forEach(TotalGames -> {
@@ -293,7 +293,7 @@ public class GameService {
 				}
 			});
 
-			loser = worstTotalgames.getUser();
+			User loser = worstTotalgames.getUser();
 
 			return loser;
 
