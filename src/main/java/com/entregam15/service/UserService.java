@@ -116,11 +116,17 @@ public class UserService {
 	
 	public LoginResponseDTO login (LoginRequestDTO loginRequestDTO ) {
 	try {
-           
+        
+		System.out.println ("metode login de UserService");
+		System.out.println ("loginRequestDTO: userName:");
+		System.out.println (loginRequestDTO.getUserName());
+		System.out.println ("loginRequestDTO: password:");
+		System.out.println (loginRequestDTO.getPassword());
+		
 		User user= userRepository.findByUserName(loginRequestDTO.getUserName())
-				.orElseThrow(() -> new ValidateServiceException ("The user or the password are incorrect") );
+				.orElseThrow(() -> new ValidateServiceException ("The user is incorrect") );
 			
-		if (!user.getPassword().equals(loginRequestDTO.getPassword())) throw new ValidateServiceException ("The user or the password are incorrect") ;
+		if (!user.getPassword().equals(loginRequestDTO.getPassword())) throw new ValidateServiceException ("The password is incorrect") ;
 			
 		String jwtToken = createToken(user);
 		
