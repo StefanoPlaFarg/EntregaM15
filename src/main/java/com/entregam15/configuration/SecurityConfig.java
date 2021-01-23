@@ -35,8 +35,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 				.and()
 			.authorizeRequests()
 				.antMatchers(
-						"POST/login",    //login
-						"POST/players"   //sign up -> create User
+						"/POST/login",    //login
+						"/POST/players"   //sign up -> create User
 						)
 					.permitAll() 
 				.anyRequest()
