@@ -54,7 +54,7 @@ public class GameController {
 	
 	//Users
 	
-	@PostMapping(value = "POST/players")
+	@PostMapping(value = "/POST/players")
 	public ResponseEntity<WrapperResponse<UserDTO>> createUser(@RequestBody SignupRequestDTO signupDTO) {
 
 		User userToCreate = userMapper.signUp(signupDTO);
@@ -65,7 +65,7 @@ public class GameController {
 
 	}
 	
-	@PutMapping(value = "PUT/players")
+	@PutMapping(value = "/PUT/players")
     public ResponseEntity<WrapperResponse<UserDTO>> updateUser(@RequestBody UserDTO userDTO) {
 		
 		User userToUpdate = userMapper.fromDTO(userDTO);
@@ -75,7 +75,7 @@ public class GameController {
 		return new WrapperResponse<>(true, "success", userMapper.fromEntity(userUpdated)).createResponse();
 	}
 	
-	@PostMapping(value = "POST/login")
+	@PostMapping(value = "/POST/login")
 	public ResponseEntity<WrapperResponse<LoginResponseDTO>> login(@RequestBody LoginRequestDTO loginRequestDTO) {
 
 		LoginResponseDTO loginResponseDTO = userService.login(loginRequestDTO);
@@ -86,7 +86,7 @@ public class GameController {
 	
 	//Game
 	
-	@PostMapping(value = "POST/players/{id}/games")
+	@PostMapping(value = "/POST/players/{id}/games")
 	public ResponseEntity<WrapperResponse<GameDTO>> play(@PathVariable(name="id") Long id){
 		
 		User user = userService.findById (id);		
@@ -94,7 +94,7 @@ public class GameController {
 		return new WrapperResponse<>(true, "success", gameMapper.fromEntity(game)).createResponse();
 	}
 	
-	@DeleteMapping(value = "DELETE/players/{id}/games")
+	@DeleteMapping(value = "/DELETE/players/{id}/games")
 	public ResponseEntity<?> deleteGames(@PathVariable(name = "id") Long id) {
 		
 		User user = userService.findById(id);
@@ -102,7 +102,7 @@ public class GameController {
 		return new WrapperResponse<>(true, "success", null).createResponse();
 	}
 	
-	@GetMapping(value = "GET/players")
+	@GetMapping(value = "/GET/players")
 	public ResponseEntity<WrapperResponse<TotalAverageGamesDTO>> findAllRankings(
 			@RequestParam(name = "pageNumber", required = false, defaultValue = "0") int pageNumber,
 			@RequestParam(name = "pageSize", required = false, defaultValue = "5") int pageSize
@@ -115,7 +115,7 @@ public class GameController {
 	}
 	
 	
-	@GetMapping(value = "GET/players/{id}/games")
+	@GetMapping(value = "/GET/players/{id}/games")
 	public ResponseEntity<WrapperResponse<GamesUserDTO>> findAllGamesByUser(
 			@RequestParam(name = "pageNumber", required = false, defaultValue = "0") int pageNumber,
 			@RequestParam(name = "pageSize", required = false, defaultValue = "5") int pageSize,
@@ -129,7 +129,7 @@ public class GameController {
 				.createResponse();
 	}
 	
-	@GetMapping(value = "GET/players/ranking")
+	@GetMapping(value = "/GET/players/ranking")
       public ResponseEntity<WrapperResponse<AverageRankingDTO>> findAverageRanking() {
 		
 		double averageRanking = gameService.findAverageRanking();
@@ -137,7 +137,7 @@ public class GameController {
 	}
 
 	
-	@GetMapping(value = "GET/players/ranking/loser")
+	@GetMapping(value = "/GET/players/ranking/loser")
 	public ResponseEntity<WrapperResponse<UserDTO>> findLoser() {
 
 		User loser = gameService.findLoser();
@@ -145,7 +145,7 @@ public class GameController {
 		return new WrapperResponse<>(true, "success", userMapper.fromEntity(loser)).createResponse();
 	}
 	
-	@GetMapping(value = "GET/players/ranking/winner")
+	@GetMapping(value = "/GET/players/ranking/winner")
 	public ResponseEntity<WrapperResponse<UserDTO>> findWinner() {
 
 		User winner = gameService.findWinner();
