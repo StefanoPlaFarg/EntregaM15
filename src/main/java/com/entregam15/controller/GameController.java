@@ -54,7 +54,7 @@ public class GameController {
 	
 	//Users
 	
-	@PostMapping(value = "POST/players/")
+	@PostMapping(value = "POST/players")
 	public ResponseEntity<WrapperResponse<UserDTO>> createUser(@RequestBody SignupRequestDTO signupDTO) {
 
 		User userToCreate = userMapper.signUp(signupDTO);
@@ -65,7 +65,7 @@ public class GameController {
 
 	}
 	
-	@PutMapping(value = "PUT/players/")
+	@PutMapping(value = "PUT/players")
     public ResponseEntity<WrapperResponse<UserDTO>> updateUser(@RequestBody UserDTO userDTO) {
 		
 		User userToUpdate = userMapper.fromDTO(userDTO);
@@ -75,7 +75,7 @@ public class GameController {
 		return new WrapperResponse<>(true, "success", userMapper.fromEntity(userUpdated)).createResponse();
 	}
 	
-	@PostMapping(value = "POST/login/")
+	@PostMapping(value = "POST/login")
 	public ResponseEntity<WrapperResponse<LoginResponseDTO>> login(@RequestBody LoginRequestDTO loginRequestDTO) {
 
 		LoginResponseDTO loginResponseDTO = userService.login(loginRequestDTO);
