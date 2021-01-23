@@ -4,12 +4,13 @@
 package com.entregam15.service;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,6 +23,8 @@ import com.entregam15.mapper.UserMapper;
 import com.entregam15.repository.*;
 import com.entregam15.validator.UserValidator;
 
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.extern.slf4j.Slf4j;
 /**
  * @author stefano
@@ -39,6 +42,9 @@ public class UserService {
 	
 	@Autowired
 	private UserRespository userRepository;
+	
+	@Value ("${jwt.password}")
+	private String jwtPassword;
 	
 	@Transactional
 	public User createUser(User user) {
@@ -116,8 +122,9 @@ public class UserService {
 			
 		if (!user.getPassword().equals(loginRequestDTO.getPassword())) throw new ValidateServiceException ("The user or the password are incorrect") ;
 			
-			
-		return new LoginResponseDTO(userMapper.fromEntity(user),"TOKEN");
+		String jwtToken = createToken(user);
+		
+		return new LoginResponseDTO(userMapper.fromEntity(user),jwtToken);
 			
 		} catch (ValidateServiceException | NoDataFoundException e) {
 			log.info(e.getMessage(), e);
@@ -129,5 +136,22 @@ public class UserService {
 		
 		
 	}
+	
+	public String createToken (User user) {
+		
+		Date now = new Date();
+		Date expirationDate = new Date (now.getTime() + (100*60*60)); //Expiration date after one hour
+		
+		return Jwts.builder()
+				.setSubject(Long.toString(user.getId()))
+				.setIssuedAt(now)
+				.setExpiration(expirationDate)
+				.signWith(SignatureAlgorithm.HS512, jwtPassword)
+				.compact();
+	}
+	
+	
+	
+	
 	
 }
