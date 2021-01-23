@@ -21,7 +21,7 @@ import com.entregam15.entity.User;
 @Component
 public class UserMapper extends AbstractMapper<User, UserDTO>{
    
-	private LocalDateTime regDate;
+	private LocalDateTime registrationDate;
 	
 	
 	@Override
@@ -43,7 +43,7 @@ public class UserMapper extends AbstractMapper<User, UserDTO>{
 	public User signUp(SignupRequestDTO dto) {
 		
 		String userName;
-		regDate  = LocalDateTime.now();
+		registrationDate  = LocalDateTime.now();
 		
 		if (dto.getUsername().isEmpty()) {
 			
@@ -59,7 +59,7 @@ public class UserMapper extends AbstractMapper<User, UserDTO>{
 		return User.builder()
 				.userName(userName )
 				.password(dto.getPassword())
-				.registrationDate(regDate)
+				.registrationDate(registrationDate)
 				.build();
 	}
 	
