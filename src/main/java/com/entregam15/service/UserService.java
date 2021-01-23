@@ -23,8 +23,12 @@ import com.entregam15.mapper.UserMapper;
 import com.entregam15.repository.*;
 import com.entregam15.validator.UserValidator;
 
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.SignatureException;
+import io.jsonwebtoken.UnsupportedJwtException;
 import lombok.extern.slf4j.Slf4j;
 /**
  * @author stefano
@@ -157,7 +161,23 @@ public class UserService {
 	}
 	
 	
-	
+	public boolean validateToken (String token) {
+		
+		try {
+			Jwts.parser().setSigningKey(jwtPassword).parseClaimsJws(token);
+			return true;
+		}catch (UnsupportedJwtException e) {
+			log.error("JWT in a particular format/configuration that does not match the format expected");
+		}catch (MalformedJwtException e) {
+			log.error(" JWT was not correctly constructed and should be rejected");
+		}catch (SignatureException e) {
+			log.error("Signature or verifying an existing signature of a JWT failed");
+		}catch (ExpiredJwtException e) {
+			log.error("JWT was accepted after it expired and must be rejected");
+		}
+		return false;
+		
+	}
 	
 	
 }
