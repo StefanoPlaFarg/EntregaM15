@@ -22,7 +22,7 @@ import com.entregam15.entity.User;
 public class UserMapper extends AbstractMapper<User, UserDTO>{
    
 	private LocalDateTime registrationDate;
-	private DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern ("dd/MM/yyyy hh::mm:ss");
+	private DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern ("dd/MM/yyyy hh:mm:ss");
 	
 	
 	@Override
