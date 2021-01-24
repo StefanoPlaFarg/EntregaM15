@@ -64,6 +64,9 @@ public class UserService {
 			
 			if(existUser != null) throw new ValidateServiceException("This user alreay exists");
 			
+			String encoder = passwordEncoder.encode(user.getPassword());
+			user.setPassword(encoder);
+			
 			return userRepository.save(user);
 			
 		} catch (ValidateServiceException | NoDataFoundException e) {
