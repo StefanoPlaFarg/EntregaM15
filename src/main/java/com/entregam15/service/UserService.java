@@ -120,13 +120,7 @@ public class UserService {
 	
 	public LoginResponseDTO login (LoginRequestDTO loginRequestDTO ) {
 	try {
-        
-		System.out.println ("metode login de UserService");
-		System.out.println ("loginRequestDTO: userName:");
-		System.out.println (loginRequestDTO.getUserName());
-		System.out.println ("loginRequestDTO: password:");
-		System.out.println (loginRequestDTO.getPassword());
-		
+       		
 		User user= userRepository.findByUserName(loginRequestDTO.getUserName())
 				.orElseThrow(() -> new ValidateServiceException ("The user is incorrect") );
 			
@@ -150,10 +144,9 @@ public class UserService {
 	public String createToken (User user) {
 		
 		Date now = new Date();
-		Date expirationDate = new Date (now.getTime() + (100*60*60)); //Expiration date after one hour
-		
+		Date expirationDate = new Date (now.getTime() + (1000*60*60)); //Expiration date after one hour (1000 ms, 60 s/min, 60 min/h)
 		return Jwts.builder()
-				.setSubject(Long.toString(user.getId()))
+				.setSubject(user.getUserName())
 				.setIssuedAt(now)
 				.setExpiration(expirationDate)
 				.signWith(SignatureAlgorithm.HS512, jwtPassword)
@@ -176,6 +169,16 @@ public class UserService {
 			log.error("JWT was accepted after it expired and must be rejected");
 		}
 		return false;
+		
+	}
+	
+	public String getUsernameFromToken(String jwt) {
+		try {
+			return Jwts.parser().setSigningKey(jwtPassword).parseClaimsJws(jwt).getBody().getSubject();	
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			throw new ValidateServiceException("Invalid Token");
+		}
 		
 	}
 	
