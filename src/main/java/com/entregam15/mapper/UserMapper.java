@@ -22,10 +22,12 @@ import com.entregam15.entity.User;
 public class UserMapper extends AbstractMapper<User, UserDTO>{
    
 	private LocalDateTime registrationDate;
+	private DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern ("dd/MM/yyyy hh::mm:ss");
 	
 	
 	@Override
 	public UserDTO fromEntity(User entity) {
+		if (entity==null) return null;
 		return UserDTO.builder()
 				.id(entity.getId())
 				.username(entity.getUserName())
@@ -34,6 +36,7 @@ public class UserMapper extends AbstractMapper<User, UserDTO>{
 
 	
 	public User fromDTO(UserDTO dto) {
+		if (dto==null) return null;
 		return User.builder()
 				.id(dto.getId())
 				.userName(dto.getUsername())
@@ -43,7 +46,8 @@ public class UserMapper extends AbstractMapper<User, UserDTO>{
 	public User signUp(SignupRequestDTO dto) {
 		
 		String userName;
-		registrationDate  = LocalDateTime.now();
+		String now  = LocalDateTime.now().format(dateTimeFormat);
+		registrationDate = LocalDateTime.parse(now, dateTimeFormat);
 		
 		if (dto.getUsername().isEmpty()) {
 			

@@ -24,6 +24,7 @@ public class GameMapper extends AbstractMapper<Game, GameDTO> {
    
 	@Override
 	public GameDTO fromEntity(Game entity) {
+		if (entity==null) return null;
 		return GameDTO.builder()
 				.valueFirstDice(entity.getValueFirstDice())
                 .valueSecondDice(entity.getValueSecondDice())
@@ -46,7 +47,7 @@ public class GameMapper extends AbstractMapper<Game, GameDTO> {
 	
 	
 	public GamesUserDTO fromAllEntitiesByUser (User user, List<Game> listGames) {
-		
+		if (user==null || listGames == null) return null;
 		return GamesUserDTO.builder()
 				.userName(user.getUserName())
                 .listGamesByUser(fromAllEntities(listGames))				

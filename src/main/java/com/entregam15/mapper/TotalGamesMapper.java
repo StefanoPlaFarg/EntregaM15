@@ -25,10 +25,11 @@ import com.entregam15.entity.User;
 public class TotalGamesMapper extends AbstractMapper<TotalGames, TotalGamesDTO> {
 
 	@Override
-	public TotalGamesDTO fromEntity(TotalGames entity) {
+	public TotalGamesDTO fromEntity(TotalGames totalGames) {
+		if (totalGames == null)return null;
 		return TotalGamesDTO.builder()
-				.userName(entity.getUser().getUserName())
-				.averageRankingUser(entity.getAverageSuccess())
+				.userName(totalGames.getUser().getUserName())
+				.averageRankingUser(totalGames.getAverageSuccess())
 				.build();
 	}
 
@@ -43,7 +44,8 @@ public class TotalGamesMapper extends AbstractMapper<TotalGames, TotalGamesDTO> 
 	}
 
 	public TotalAverageGamesDTO fromAllTotalGamesEntities(List<TotalGames> listTotalGames) {
-
+		if (listTotalGames == null)
+			return null;
 		return TotalAverageGamesDTO.builder()
 				.listTotalGamesUser(fromAllEntities(listTotalGames))
 				.build();
@@ -51,7 +53,7 @@ public class TotalGamesMapper extends AbstractMapper<TotalGames, TotalGamesDTO> 
 	}
 	
 	public AverageRankingDTO fromAverageRanking(double averageRanking) {
-
+		
 		return AverageRankingDTO.builder()
 				.averageRanking(averageRanking)
 				.build();
