@@ -33,7 +33,7 @@ public class Game {
 	private Long id;
 	
 		
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	@JoinColumn(name="FK_USER", nullable = false)
 	private User user;
 	

@@ -44,7 +44,20 @@ public class UserPrincipal implements UserDetails {
 	public String getUsername() {
 		return user.getUserName();
 	}
+    
+	
+	public void setPassword(String password) {
+		 user.setPassword(password);
+	}
 
+	
+	public void setUsername(String username) {
+		user.setUserName(username);
+	}
+	
+	
+	
+	
 	@Override
 	public boolean isAccountNonExpired() {
 		return true;

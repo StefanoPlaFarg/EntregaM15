@@ -84,36 +84,28 @@ public class GameController {
 
 	}
 	
-	//Game
-	
+	// Game
+
 	@PostMapping(value = "/POST/players/{id}/games")
-	public ResponseEntity<WrapperResponse<GameDTO>> play(@PathVariable(name="id") Long id){
-		
-		User user = userService.findById (id);		
-		Game game = gameService.playAndSaveGame(user);		
+	public ResponseEntity<WrapperResponse<GameDTO>> play(@PathVariable(name = "id") Long id) {
+
+		User user = userService.findById(id);
+
+		Game game = gameService.playAndSaveGame(user);
+
 		return new WrapperResponse<>(true, "success", gameMapper.fromEntity(game)).createResponse();
 	}
-	
+
 	@DeleteMapping(value = "/DELETE/players/{id}/games")
 	public ResponseEntity<?> deleteGames(@PathVariable(name = "id") Long id) {
 		
 		User user = userService.findById(id);
 		gameService.deleteAllGamesAndRankingByUser(user);
+		
+		
+		
 		return new WrapperResponse<>(true, "success", null).createResponse();
 	}
-	
-	@GetMapping(value = "/GET/players")
-	public ResponseEntity<WrapperResponse<TotalAverageGamesDTO>> findAllRankings(
-			@RequestParam(name = "pageNumber", required = false, defaultValue = "0") int pageNumber,
-			@RequestParam(name = "pageSize", required = false, defaultValue = "5") int pageSize
-			){
-		
-		Pageable page = PageRequest.of(pageNumber, pageSize);
-		List<TotalGames> listTotalGames =gameService.findGroupRankings(page);
-		return new WrapperResponse<>(true, "success", totalGamesMapper.fromAllTotalGamesEntities(listTotalGames))
-				.createResponse();
-	}
-	
 	
 	@GetMapping(value = "/GET/players/{id}/games")
 	public ResponseEntity<WrapperResponse<GamesUserDTO>> findAllGamesByUser(
@@ -128,6 +120,24 @@ public class GameController {
 		return new WrapperResponse<>(true, "success", gameMapper.fromAllEntitiesByUser(user, listGamesByUser))
 				.createResponse();
 	}
+	
+	
+	
+	
+	
+	@GetMapping(value = "/GET/players")
+	public ResponseEntity<WrapperResponse<TotalAverageGamesDTO>> findAllRankings(
+			@RequestParam(name = "pageNumber", required = false, defaultValue = "0") int pageNumber,
+			@RequestParam(name = "pageSize", required = false, defaultValue = "5") int pageSize
+			){
+		
+		Pageable page = PageRequest.of(pageNumber, pageSize);
+		List<TotalGames> listTotalGames =gameService.findGroupRankings(page);
+		return new WrapperResponse<>(true, "success", totalGamesMapper.fromAllTotalGamesEntities(listTotalGames))
+				.createResponse();
+	}
+	
+	
 	
 	@GetMapping(value = "/GET/players/ranking")
       public ResponseEntity<WrapperResponse<AverageRankingDTO>> findAverageRanking() {

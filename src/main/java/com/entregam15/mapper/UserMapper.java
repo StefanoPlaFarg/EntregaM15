@@ -22,7 +22,7 @@ import com.entregam15.entity.User;
 public class UserMapper extends AbstractMapper<User, UserDTO>{
    
 	private LocalDateTime registrationDate;
-	private DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern ("dd/MM/yyyy hh:mm:ss");
+	private static DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern ("dd-MM-yyyy HH:mm:ss");
 	
 	
 	@Override
@@ -46,8 +46,17 @@ public class UserMapper extends AbstractMapper<User, UserDTO>{
 	public User signUp(SignupRequestDTO dto) {
 		
 		String userName;
-		String now  = LocalDateTime.now().format(dateTimeFormat);
-		registrationDate = LocalDateTime.parse(now, dateTimeFormat);
+		
+		//registrationDate = LocalDateTime.now();
+		//String now = registrationDate.format(dateTimeFormat);
+		
+		
+		//String now  = LocalDateTime.now().format(dateTimeFormat);
+		//System.out.println("now " + now );
+	    //registrationDate = LocalDateTime.parse(now,dateTimeFormat);
+	    //System.out.println("registrationDate " + registrationDate);
+		registrationDate = LocalDateTime.now();
+	   
 		
 		if (dto.getUsername().isEmpty()) {
 			

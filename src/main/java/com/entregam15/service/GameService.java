@@ -3,9 +3,9 @@
  */
 package com.entregam15.service;
 
-import java.time.LocalDateTime;
+
 import java.util.List;
-import java.util.Optional;
+
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +13,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.entregam15.dto.TotalGamesDTO;
+
 import com.entregam15.entity.*;
 import com.entregam15.exception.*;
 import com.entregam15.repository.*;
+import com.entregam15.security.UserPrincipal;
 
 import lombok.extern.slf4j.Slf4j;
 /**
@@ -39,16 +40,17 @@ public class GameService {
 	
 	//Games by User
 	
-	@Transactional
+	//@Transactional
 	public Game playAndSaveGame(User user) {
 		try {			
 			
+					
 			//Play the Game
 			DiceGame diceGame = DiceGame.builder().build();
 			diceGame.play();
 
 			//Save the game into Game Repository
-			Game game = Game.builder()
+			Game newGame = Game.builder()
 					.user(user)
 					.valueFirstDice(diceGame.getValueFirstDice())
 					.valueSecondDice(diceGame.getValueSecondDice())
@@ -56,7 +58,9 @@ public class GameService {
 					.gameWon(diceGame.isGameWon())
 					.build();
 
-			gameRepository.save(game);
+			gameRepository.save(newGame);
+			
+			
 			
 			//Update and save the Average Success into ranking Repository
 			TotalGames totalGames = user.getTotalGames();
@@ -65,18 +69,24 @@ public class GameService {
              
 				TotalGames newTotalGames = TotalGames.builder()
 				.user(user)
-				.averageSuccess(calcUpdatedRanking(user))				
-				.build();			
+				.averageSuccess(calcUpdatedRanking(user, newGame))				
+				.build();		
 				
-				rankingRepository.save(newTotalGames);
+				totalGames=newTotalGames;
+				
+				rankingRepository.save(totalGames);
 				
 			}else {
 				
-				totalGames.setAverageSuccess(calcUpdatedRanking(user));
+				totalGames.setAverageSuccess(calcUpdatedRanking(user, newGame));
 				rankingRepository.save(totalGames);	
 				
-			}			
-			return game;
+			}
+			
+			
+			
+			
+			return newGame;
 			
 		} catch (ValidateServiceException | NoDataFoundException e) {
 			log.info(e.getMessage(), e);
@@ -88,23 +98,53 @@ public class GameService {
 	}
 	
 	
-	private double calcUpdatedRanking(User user) {
+	private double calcUpdatedRanking(User user, Game newGame) {
 
+		//
+		//List <Game> listGames = gameRepository.findAllbyUserName(user.getUserName());
+		
 		try {
-            
-			if (user.getListGames() == null) throw new NoDataFoundException("The user has no games");
-			
-			double counterGamesWonByUser = (double)user.getListGames().stream()
-					.filter(Game -> Game.isGameWon() == true).count();
-					
-					//.map(Game -> 1)
-					//.reduce(0, (sum, value) -> sum + value);
 
-			double totalGamesByUser = (double)user.getListGames().stream().count();
-					//.map(Game -> 1)
-					//.reduce(0, (sum, value) -> sum + value);
+			if (user.getListGames() == null)
+				throw new NoDataFoundException("The user has no games");
+
+			/*
+			 * double counterGamesWonByUser = (double)user.getListGames().stream()
+			 * .filter(Game -> Game.isGameWon() == true) .count();
+			 * 
+			 * //.map(Game -> 1) //.reduce(0, (sum, value) -> sum + value);
+			 * 
+			 * double totalGamesByUser = (double)user.getListGames().stream().count();
+			 * //.map(Game -> 1) //.reduce(0, (sum, value) -> sum + value);
+			 * 
+			 */
+
+			double counterGamesWonByUser = 0;
+
+			for (Game game : user.getListGames()) {
+
+				if (game.isGameWon())
+					counterGamesWonByUser++;
+
+			}
 			
-			return counterGamesWonByUser / totalGamesByUser;
+			if (newGame.isGameWon()) counterGamesWonByUser++;
+
+			double totalGamesByUser = (double) ( user.getListGames().size() +1)  ;
+
+				System.out.println("counterGamesWonByUser "+counterGamesWonByUser );
+			System.out.println("totalGamesByUser "+totalGamesByUser );
+			System.out.println("result "+counterGamesWonByUser / totalGamesByUser);
+			
+			if (counterGamesWonByUser == 0)
+				return 0;
+			
+			return (double) counterGamesWonByUser / totalGamesByUser;
+			
+			
+			
+			
+			
 
 		} catch (ValidateServiceException | NoDataFoundException e) {
 			log.info(e.getMessage(), e);
@@ -124,7 +164,7 @@ public class GameService {
 		try {
 
 			if (user.getListGames() == null)
-				new NoDataFoundException("The user has no games");
+				throw new NoDataFoundException("The user has no games");
 
 			// Delete TotalGames of User from RankingRepository
 			deleteAllRankingsByUser(user);
@@ -143,9 +183,8 @@ public class GameService {
 			throw new GeneralServiceException(e.getMessage(), e);
 		}
 	}
-	
 
-	public List<Game> findAllGamesByUser(User user) {
+	/*public List<Game> findAllGamesByUser(User user) {
 		try {
             
 			if (user.getListGames()==null) throw new NoDataFoundException("The user has no games");
@@ -160,7 +199,7 @@ public class GameService {
 			throw new GeneralServiceException(e.getMessage(), e);
 		}
 	}
-	
+	*/
 	
 	public List<Game> findAllGamesByUser(User user, Pageable page) {
 		try {

@@ -32,7 +32,7 @@ public class TotalGames {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;	
 	
-	@OneToOne (fetch = FetchType.LAZY, optional = false)
+	@OneToOne (fetch = FetchType.EAGER, optional = false)
 	@JoinColumn(name="FK_USER", nullable = false)
 	private User user;
 	

@@ -45,9 +45,9 @@ public class User {
 	 @Column(name="REGISTRATION_DATE", nullable = false)
 	 private LocalDateTime registrationDate;
 	 
-	 @OneToMany(mappedBy = "user",  fetch = FetchType.LAZY)
+	 @OneToMany(mappedBy = "user",  fetch = FetchType.EAGER)
 	 private List<Game> listGames;
 	 
-	 @OneToOne(mappedBy = "user",  fetch = FetchType.LAZY)
+	 @OneToOne(mappedBy = "user",  fetch = FetchType.EAGER)
 	 private TotalGames totalGames;
 }

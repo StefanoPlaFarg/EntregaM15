@@ -4,6 +4,8 @@
 package com.entregam15.security;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -19,6 +21,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.entregam15.entity.User;
 import com.entregam15.exception.NoDataFoundException;
+import com.entregam15.exception.ValidateServiceException;
 import com.entregam15.repository.UserRespository;
 import com.entregam15.service.UserService;
 
@@ -41,13 +44,18 @@ public class TokenAuthentificationFilter extends OncePerRequestFilter {
 			String jwt = getJwtFromRequest(request);
 
 			if (StringUtils.hasText(jwt) && userService.validateToken(jwt)) {
-				String username = userService.getUsernameFromToken(jwt);
-				User user = userRepository.findByUserName(username)
+				
+				
+				// String username = userService.getUsernameFromToken(jwt);
+
+				Long idUserFromToken = Long.valueOf(userService.getUserIdFromToken(jwt));
+
+				User user = userRepository.findById(idUserFromToken)
 						.orElseThrow(() -> new NoDataFoundException("The user doesn't exist"));
 
-				UserPrincipal principal = UserPrincipal.create(user);
-				UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(principal,
-						null, principal.getAuthorities());
+				UserPrincipal userPrincipal = UserPrincipal.create(user);
+				UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userPrincipal,
+						null, userPrincipal.getAuthorities());
 				authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
 				SecurityContextHolder.getContext().setAuthentication(authentication);
