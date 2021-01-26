@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -142,6 +143,34 @@ public class UserService {
 
 	}
 	
+	
+	
+	public List<User> findAllUsersWithGames() {
+
+		try {
+
+			List<User> existingUsersWithGames = userRepository.findAll().stream()
+					.filter(User -> User.getListGames().size() != 0).collect(Collectors.toList());
+
+			if (existingUsersWithGames == null)
+				throw new NoDataFoundException("This user doesn't exist");
+
+			return existingUsersWithGames;
+
+		} catch (ValidateServiceException | NoDataFoundException e) {
+			log.info(e.getMessage(), e);
+			throw e;
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			throw new GeneralServiceException(e.getMessage(), e);
+		}
+
+	}
+	
+	
+	
+	
+	
 	@Transactional
 	public User updateUser(User user) {
 		try {
@@ -186,12 +215,11 @@ public class UserService {
 			List<User> listExistingUsers = new ArrayList<User>();
 			User user = null;
 
-			
-			System.out.println(listExistingUsers);
+		
 			
 			listExistingUsers = userRepository.findAllByUserName(loginRequestDTO.getUsername());
 
-			System.out.println(listExistingUsers);
+		
 			
 			
 			if (listExistingUsers.size() == 0) {
