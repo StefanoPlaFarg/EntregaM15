@@ -38,63 +38,25 @@ public class GameService {
 	private RankingRepository rankingRepository;
 	
 	
-	//Games by User
+	//GAMES
 	
-	//@Transactional
+	//Play a Game
 	public Game playAndSaveGame(User user) {
-		try {			
-			
-					
-			//Play the Game
+		try {
+
+			// Play the Game
 			DiceGame diceGame = DiceGame.builder().build();
 			diceGame.play();
 
-			//Save the game into Game Repository
-			Game newGame = Game.builder()
-					.user(user)
-					.valueFirstDice(diceGame.getValueFirstDice())
-					.valueSecondDice(diceGame.getValueSecondDice())
-					.totalValue(diceGame.getTotalValueGame())
-					.gameWon(diceGame.isGameWon())
-					.build();
+			// Save the game into Game Repository
+			Game newGame = Game.builder().user(user).valueFirstDice(diceGame.getValueFirstDice())
+					.valueSecondDice(diceGame.getValueSecondDice()).totalValue(diceGame.getTotalValueGame())
+					.gameWon(diceGame.isGameWon()).build();
 
 			gameRepository.save(newGame);
-			
-			
-			
-			/*//Update and save the Average Success into ranking Repository
-			
-			
-			//TotalGames totalGames = user.getTotalGames();
-			
-			
-			//
-			
-			TotalGames totalGames = rankingRepository.findByUser(user).orElse(null);
-			
-			if (totalGames==null ) { // The user hasn't neither games nor totalgames yet
-             
-				TotalGames newTotalGames = TotalGames.builder()
-				.user(user)
-				.averageSuccess(updateRanking(user))				
-				.build();		
-				
-				totalGames=newTotalGames;
-				
-				rankingRepository.save(totalGames);
-				
-			}else {
-				
-				totalGames.setAverageSuccess(updateRanking(user));
-				rankingRepository.save(totalGames);	
-				
-			}
-			
-			
-			*/
-			
+
 			return newGame;
-			
+
 		} catch (ValidateServiceException | NoDataFoundException e) {
 			log.info(e.getMessage(), e);
 			throw e;
@@ -107,16 +69,17 @@ public class GameService {
 	
 	
 	
-	
-	
+	//Delete All Games of a User and his ranking
 	public void deleteAllGamesAndRankingByUser(User user) {
 		try {
 
-			if (user.getListGames() == null)
+			List<Game> listGames = gameRepository.findAllByUser(user).orElse(null);
+			
+			if (listGames == null)
 				throw new NoDataFoundException("The user has no games");
 
 			// Delete TotalGames of User from RankingRepository
-			deleteAllRankingsByUser(user);
+			deleteTankingByUser(user);
 
 			// Delete Games of User from GamesRepository
 			List<Game> listGamesToBeRemoved = gameRepository.findAll().stream()
@@ -133,28 +96,15 @@ public class GameService {
 		}
 	}
 
-	/*public List<Game> findAllGamesByUser(User user) {
-		try {
-            
-			if (user.getListGames()==null) throw new NoDataFoundException("The user has no games");
-			
-			return user.getListGames();
-
-		} catch (ValidateServiceException | NoDataFoundException e) {
-			log.info(e.getMessage(), e);
-			throw e;
-		} catch (Exception e) {
-			log.error(e.getMessage(), e);
-			throw new GeneralServiceException(e.getMessage(), e);
-		}
-	}
-	*/
-	
+	//Get a set of Games (Page) of a User 
 	public List<Game> findAllGamesByUser(User user, Pageable page) {
 		try {
 
-			if (user.getListGames() == null)
+             List<Game> listGames = gameRepository.findAllByUser(user).orElse(null);
+			
+			if (listGames == null)
 				throw new NoDataFoundException("The user has no games");
+
 
 			return gameRepository.findAllByUser(user, page).toList();
 
@@ -169,23 +119,21 @@ public class GameService {
 	
 	
 	
-	//Rankings 	
+	//RANKINGS	
 	
-	
-
+	//Get the value of the current ranking of a user through his games
 	private double updateRanking(User user) {
 
-		//
+		
 		List<Game> listGames = gameRepository.findAllByUser(user).orElse(null);
-		
-		
+
 		try {
 
-			
-			
 			if (listGames == null)
 				throw new NoDataFoundException("The user has no games yet");
+
 			
+			//Get the number of won games
 			double counterGamesWonByUser = 0;
 
 			for (Game game : listGames) {
@@ -194,63 +142,14 @@ public class GameService {
 					counterGamesWonByUser++;
 
 			}
-			
-			double totalGamesByUser = (double) ( user.getListGames().size())  ;
 
-			
+			//Get the number games 
+			double totalGamesByUser = (double) (user.getListGames().size());
+
 			if (counterGamesWonByUser == 0)
 				return 0;
-			
+
 			return (double) counterGamesWonByUser / totalGamesByUser;
-			
-			
-			
-		
-			/*
-			if (user.getListGames() == null)
-				throw new NoDataFoundException("The user has no games");
-            */
-
-
-			/*
-			 * double counterGamesWonByUser = (double)user.getListGames().stream()
-			 * .filter(Game -> Game.isGameWon() == true) .count();
-			 * 
-			 * //.map(Game -> 1) //.reduce(0, (sum, value) -> sum + value);
-			 * 
-			 * double totalGamesByUser = (double)user.getListGames().stream().count();
-			 * //.map(Game -> 1) //.reduce(0, (sum, value) -> sum + value);
-			 * 
-			 */
-
-			/*
-			
-			double counterGamesWonByUser = 0;
-
-			for (Game game : user.getListGames()) {
-
-				if (game.isGameWon())
-					counterGamesWonByUser++;
-
-			}
-			
-			if (newGame.isGameWon()) counterGamesWonByUser++;
-
-			double totalGamesByUser = (double) ( user.getListGames().size() +1)  ;
-
-				System.out.println("counterGamesWonByUser "+counterGamesWonByUser );
-			System.out.println("totalGamesByUser "+totalGamesByUser );
-			System.out.println("result "+counterGamesWonByUser / totalGamesByUser);
-			
-			if (counterGamesWonByUser == 0)
-				return 0;
-			
-			return (double) counterGamesWonByUser / totalGamesByUser;
-			
-			
-			*/
-			
-			
 
 		} catch (ValidateServiceException | NoDataFoundException e) {
 			log.info(e.getMessage(), e);
@@ -262,15 +161,10 @@ public class GameService {
 
 	}
 	
-	
-	public TotalGames getUpdatedRanking (User user) {
-		
-		
+	//Save the updated ranking of a user
+	public TotalGames saveUpdatedRanking(User user) {
+
 		try {
-
-			// TotalGames totalGames = user.getTotalGames();
-
-			//
 
 			TotalGames totalGames = rankingRepository.findByUser(user).orElse(null);
 
@@ -297,18 +191,17 @@ public class GameService {
 			log.error(e.getMessage(), e);
 			throw new GeneralServiceException(e.getMessage(), e);
 		}
-		
-		
-		
+
 	}
 	
+	//Get all updated rankings of user who has games
 	public List<TotalGames> getAllUpdatedRankings(List<User> existingUsersWithGames) {
 
 		try {
 
 			for (User user : existingUsersWithGames) {
 
-				getUpdatedRanking(user);
+				saveUpdatedRanking(user);
 
 			}
 
@@ -327,15 +220,11 @@ public class GameService {
 	
 	
 	
-	
+	// Get the updated ranking of a user
 	public TotalGames findAverageRankingByUser(User user) {
 		try {
 
-			return getUpdatedRanking(user);
-
-			// if ( user.getTotalGames()==null )throw new NoDataFoundException("The user has
-			// no games");
-			// return rankingRepository.findById(user.getTotalGames().getId()).get();
+			return saveUpdatedRanking(user);
 
 		} catch (ValidateServiceException | NoDataFoundException e) {
 			log.info(e.getMessage(), e);
@@ -345,47 +234,38 @@ public class GameService {
 			throw new GeneralServiceException(e.getMessage(), e);
 		}
 	}
-	  
      
 	
-       
-       private void deleteAllRankingsByUser(User user) {
-   		
-    	   try {
-   			
-    		 
-    		   TotalGames totalGames = rankingRepository.findByUser(user).orElse(null);
-    		   
-    		   if ( totalGames==null )throw new NoDataFoundException("The user has no games yet");
-    		   
-    		   rankingRepository.deleteById(totalGames.getId());
+	// Delete the ranking of a user
+	private void deleteTankingByUser(User user) {
 
-    		   
-    		   
-   			//if ( user.getTotalGames()==null )throw new NoDataFoundException("The user has no games");
-   			//rankingRepository.deleteById(user.getTotalGames().getId());
+		try {
 
-   		} catch (ValidateServiceException | NoDataFoundException e) {
-   			log.info(e.getMessage(), e);
-   			throw e;
-   		} catch (Exception e) {
-   			log.error(e.getMessage(), e);
-   			throw new GeneralServiceException(e.getMessage(), e);
-   		}
-   	}
+			TotalGames totalGames = rankingRepository.findByUser(user).orElse(null);
+
+			if (totalGames == null)
+				throw new NoDataFoundException("The user has no games yet");
+
+			rankingRepository.deleteById(totalGames.getId());
+
+		} catch (ValidateServiceException | NoDataFoundException e) {
+			log.info(e.getMessage(), e);
+			throw e;
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			throw new GeneralServiceException(e.getMessage(), e);
+		}
+	}
        
        
-	
-	public List<TotalGames> findGroupRankings( Pageable page, List<User> existingUsersWithGames  ) {
+	//Get a set of rankings (Page)
+	public List<TotalGames> findGroupRankings(Pageable page, List<User> existingUsersWithGames) {
 		try {
 
 			getAllUpdatedRankings(existingUsersWithGames);
-			
+
 			return rankingRepository.findAll(page).toList();
-			
-			
-			
-			
+
 		} catch (ValidateServiceException | NoDataFoundException e) {
 			log.info(e.getMessage(), e);
 			throw e;
@@ -396,24 +276,7 @@ public class GameService {
 	}
 	
 	
-	
-	/*public List<TotalGames> findAllRankings(List<User> existingUsersWithGames) {
-		try {
-			
-			if (rankingRepository.findAll()==null) throw new NoDataFoundException("There are no games");
-			return rankingRepository.findAll();
-			
-		} catch (ValidateServiceException | NoDataFoundException e) {
-			log.info(e.getMessage(), e);
-			throw e;
-		} catch (Exception e) {
-			log.error(e.getMessage(), e);
-			throw new GeneralServiceException(e.getMessage(), e);
-		}
-	}
-	
-	*/
-	
+	//Get the average ranking of all users	
 	public double findAverageRanking(List<User> existingUsersWithGames){
 		try {
 			
@@ -444,7 +307,8 @@ public class GameService {
 		}
 	}
 	
-	@Transactional
+	
+	//Get the worst user by his ranking	
 	public User findLoser(List<User> existingUsersWithGames) {
 		try {
 
@@ -479,6 +343,7 @@ public class GameService {
 		}
 	}
 	
+	//Get the best user by his ranking	
 	public User findWinner(List<User> existingUsersWithGames) {
 		try {
 
