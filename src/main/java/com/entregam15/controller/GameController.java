@@ -52,8 +52,10 @@ public class GameController {
 	private UserMapper userMapper;
 	
 	
-	//Users
+	//API Users
 	
+	
+	//http://localhost:8080/api/v1/POST/players  ---> CREATE a User
 	@PostMapping(value = "/POST/players")
 	public ResponseEntity<WrapperResponse<UserDTO>> createUser(@RequestBody SignupRequestDTO signupDTO) {
 
@@ -65,6 +67,7 @@ public class GameController {
 
 	}
 	
+	//http://localhost:8080/api/v1/PUT/players ---> UPDATE a Username
 	@PutMapping(value = "/PUT/players")
     public ResponseEntity<WrapperResponse<UserDTO>> updateUser(@RequestBody UserDTO userDTO) {
 		
@@ -75,6 +78,7 @@ public class GameController {
 		return new WrapperResponse<>(true, "success", userMapper.fromEntity(userUpdated)).createResponse();
 	}
 	
+	//http://localhost:8080/api/v1/POST/login ---> LOGGIN
 	@PostMapping(value = "/POST/login")
 	public ResponseEntity<WrapperResponse<LoginResponseDTO>> login(@RequestBody LoginRequestDTO loginRequestDTO) {
 
@@ -84,8 +88,9 @@ public class GameController {
 
 	}
 	
-	// Game
+	//API Game and Rankings
 
+	//http://localhost:8080/api/v1/POST/players/1/games ---> (GET) User with iD = {id} plays a game
 	@PostMapping(value = "/POST/players/{id}/games")
 	public ResponseEntity<WrapperResponse<GameDTO>> play(@PathVariable(name = "id") Long id) {
 
@@ -96,6 +101,7 @@ public class GameController {
 		return new WrapperResponse<>(true, "success", gameMapper.fromEntity(game)).createResponse();
 	}
 
+	//http://localhost:8080/api/v1/DELETE/players/1/games ---> (GET) User with iD = {id} delete all his games and rankings
 	@DeleteMapping(value = "/DELETE/players/{id}/games")
 	public ResponseEntity<?> deleteGames(@PathVariable(name = "id") Long id) {
 		
@@ -107,6 +113,7 @@ public class GameController {
 		return new WrapperResponse<>(true, "success", null).createResponse();
 	}
 	
+	//http://localhost:8080/api/v1/GET/players/1/games?pageNumber=0&pageSize=10 ---> (GET) User with iD = {id} gets a set all his games (with a specified Page)
 	@GetMapping(value = "/GET/players/{id}/games")
 	public ResponseEntity<WrapperResponse<GamesUserDTO>> findAllGamesByUser(
 			@RequestParam(name = "pageNumber", required = false, defaultValue = "0") int pageNumber,
@@ -124,7 +131,7 @@ public class GameController {
 	
 	
 	
-	
+	//http://localhost:8080/api/v1/GET/players?pageNumber=0&pageSize=10 -----> (GET) all Rankings of all Users
 	@GetMapping(value = "/GET/players")
 	public ResponseEntity<WrapperResponse<TotalAverageGamesDTO>> findAllRankings(
 			@RequestParam(name = "pageNumber", required = false, defaultValue = "0") int pageNumber,
@@ -141,7 +148,7 @@ public class GameController {
 	}
 	
 	
-	
+	//http://localhost:8080/api/v1/GET/players/ranking ----> (GET) Average ranking of all users
 	@GetMapping(value = "/GET/players/ranking")
       public ResponseEntity<WrapperResponse<AverageRankingDTO>> findAverageRanking() {
 		
@@ -151,7 +158,7 @@ public class GameController {
 		return new WrapperResponse<>(true, "success", totalGamesMapper.fromAverageRanking(averageRanking)).createResponse();
 	}
 
-	
+	//http://localhost:8080/api/v1/GET/players/ranking/loser ----> (GET) User with worst ranking
 	@GetMapping(value = "/GET/players/ranking/loser")
 	public ResponseEntity<WrapperResponse<UserDTO>> findLoser() {
 
@@ -162,6 +169,7 @@ public class GameController {
 		return new WrapperResponse<>(true, "success", userMapper.fromEntity(loser)).createResponse();
 	}
 	
+	//http://localhost:8080/api/v1/GET/players/ranking/loser ----> (GET) User with best ranking
 	@GetMapping(value = "/GET/players/ranking/winner")
 	public ResponseEntity<WrapperResponse<UserDTO>> findWinner() {
      
