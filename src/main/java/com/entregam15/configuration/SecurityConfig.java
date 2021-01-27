@@ -50,9 +50,27 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 				.authenticationEntryPoint(new RestAuthenticationEntryPoint())
 				.and()
 			.authorizeRequests()
+			.antMatchers("/",             //Urls --> Swagger
+                    "/error",       
+                    "/favicon.ico",
+                    "/**/*.png",
+                    "/**/*.gif",
+                    "/**/*.svg",
+                    "/**/*.jpg",
+                    "/**/*.html",
+                    "/**/*.css",
+                    "/**/*.js",
+                    "/**/*.woff2"
+	        			)
+                    .permitAll()
+			
+			
 				.antMatchers(
-						"/POST/login",    //login - > This Url doesnt need authentication
-						"/POST/players"   //sign up -> This Url doesnt need authentication
+						"/POST/login",            //login - > This Url doesnt need authentication
+						"/POST/players",          //sign up -> This Url doesnt need authentication
+						"/v2/api-docs",           //Urls --> Swagger
+						"/webjars/**",            //Urls --> Swagger
+	            		"/swagger-resources/**"   //Urls --> Swagger
 						)
 					.permitAll() 
 				.anyRequest()              //the rest of the URls need authentication
