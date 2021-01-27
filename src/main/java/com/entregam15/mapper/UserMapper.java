@@ -44,36 +44,26 @@ public class UserMapper extends AbstractMapper<User, UserDTO>{
 	}
 
 	public User signUp(SignupRequestDTO dto) {
-		
-		String userName;
-		
-		//registrationDate = LocalDateTime.now();
-		//String now = registrationDate.format(dateTimeFormat);
-		
-		
-		//String now  = LocalDateTime.now().format(dateTimeFormat);
-		//System.out.println("now " + now );
-	    //registrationDate = LocalDateTime.parse(now,dateTimeFormat);
-	    //System.out.println("registrationDate " + registrationDate);
+
+		String username;
+
+		// registrationDate = LocalDateTime.now();
+		// String now = registrationDate.format(dateTimeFormat);
+		// registrationDate = LocalDateTime.parse(now,dateTimeFormat);
+
 		registrationDate = LocalDateTime.now();
-	   
-		
-		if (dto.getUsername().isEmpty()) {
-			
-			userName = "ANONIM";
-			
-		}else {
-			
-			userName = dto.getUsername();
-			
+
+		if (dto.getUsername().isEmpty()) { //if the user doesnt provid a username, create 
+
+			username = "ANONIM";
+
+		} else {
+
+			username = dto.getUsername();
+
 		}
-		
-		
-		return User.builder()
-				.userName(userName )
-				.password(dto.getPassword())
-				.registrationDate(registrationDate)
-				.build();
+
+		return User.builder().userName(username).password(dto.getPassword()).registrationDate(registrationDate).build();
 	}
 	
 	

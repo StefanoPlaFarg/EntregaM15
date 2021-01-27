@@ -15,6 +15,8 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+
+//Wrapper of the object returned after processing the request
 public class WrapperResponse<T> {
 	private boolean requestHandled;
 	private String messageToReturn;

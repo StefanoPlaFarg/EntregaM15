@@ -51,11 +51,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 				.and()
 			.authorizeRequests()
 				.antMatchers(
-						"/POST/login",    //login
-						"/POST/players"   //sign up -> create User
+						"/POST/login",    //login - > This Url doesnt need authentication
+						"/POST/players"   //sign up -> This Url doesnt need authentication
 						)
 					.permitAll() 
-				.anyRequest()
+				.anyRequest()              //the rest of the URls need authentication
 					.authenticated();
 		
 		http.addFilterBefore(createTokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);

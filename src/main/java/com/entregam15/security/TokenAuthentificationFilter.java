@@ -41,31 +41,34 @@ public class TokenAuthentificationFilter extends OncePerRequestFilter {
 			throws ServletException, IOException {
 
 		try {
-			String jwt = getJwtFromRequest(request);
+			String jwt = getJwtFromRequest(request);//Get the token from the request
 
-			if (StringUtils.hasText(jwt) && userService.validateToken(jwt)) {
+			if (StringUtils.hasText(jwt) && userService.validateToken(jwt)) {//Validate the token
 				
-				
-				// String username = userService.getUsernameFromToken(jwt);
-
-				Long idUserFromToken = Long.valueOf(userService.getUserIdFromToken(jwt));
-
+				//Get the user id from the token
+				Long idUserFromToken = Long.valueOf(userService.getUserIdFromToken(jwt)); 
+                
+				//Get the user by his id
 				User user = userRepository.findById(idUserFromToken)
 						.orElseThrow(() -> new NoDataFoundException("The user doesn't exist"));
 
+				//Create the wrapper for the user and give him authorities
 				UserPrincipal userPrincipal = UserPrincipal.create(user);
 				UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userPrincipal,
 						null, userPrincipal.getAuthorities());
 				authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-
+                
+				//Create authentication and authorization for the user in the pool of authenticated and authorized users 
 				SecurityContextHolder.getContext().setAuthentication(authentication);
 			}
 		} catch (Exception e) {
 			log.error("Authentification Error", e);
 		}
+		//Change the filter
 		filterChain.doFilter(request, response);
 	}
-
+    
+	//Get the token from Request
 	public String getJwtFromRequest(HttpServletRequest request) {
 		String bearerToken = request.getHeader("Authorization");
 		if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {

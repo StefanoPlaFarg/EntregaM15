@@ -10,6 +10,8 @@ import com.entregam15.exception.ValidateServiceException;
  * @author stefano
  *
  */
+
+//Validates if a user provides the password when he signs up
 public class UserValidator {
 	
 	public static void validateUser(User user) {
