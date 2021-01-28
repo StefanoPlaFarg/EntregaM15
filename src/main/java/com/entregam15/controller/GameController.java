@@ -102,8 +102,11 @@ public class GameController {
 		return new WrapperResponse<>(true, "success", gameMapper.fromEntity(game)).createResponse();
 	}
 
+
+	
 	//http://localhost:8080/api/v1/DELETE/players/1/games ---> (GET) User with iD = {id} delete all his games and rankings
 	@DeleteMapping(value = "/DELETE/players/{id}/games")
+	
 	public ResponseEntity<?> deleteGames(@PathVariable(name = "id") ObjectId id) {
 		
 		User user = userService.findById(id);
@@ -113,6 +116,8 @@ public class GameController {
 		
 		return new WrapperResponse<>(true, "success", null).createResponse();
 	}
+	
+	
 	
 	//http://localhost:8080/api/v1/GET/players/1/games?pageNumber=0&pageSize=10 ---> (GET) User with iD = {id} gets a set all his games (with a specified Page)
 	@GetMapping(value = "/GET/players/{id}/games")
