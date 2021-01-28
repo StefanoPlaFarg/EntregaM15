@@ -7,7 +7,11 @@ package com.entregam15.entity;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import javax.persistence.*;
+
+
+import org.bson.types.ObjectId;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -27,27 +31,23 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Entity
-@Table(name="USERS")
-public class User {
 
-	 @Id
-	 @Column (name ="ID")
-	 @GeneratedValue(strategy = GenerationType.IDENTITY)
-	 private Long id;
-	 	 
-	 @Column(name="NAME", nullable = false)
-	 private String userName;
-	 
-	 @Column(name="PASSWORD", nullable = false)
-	 private String password;
-	 
-	 @Column(name="REGISTRATION_DATE", nullable = false)
-	 private LocalDateTime registrationDate;
-	 
-	 @OneToMany(mappedBy = "user",  fetch = FetchType.EAGER)
-	 private List<Game> listGames;
-	 
-	 @OneToOne(mappedBy = "user",  fetch = FetchType.EAGER)
-	 private TotalGames totalGames;
+@Document(collection = "USERS")
+public class User {
+	
+
+	
+	@Id
+	private ObjectId id;
+
+	private String userName;
+
+	private String password;
+
+	private LocalDateTime registrationDate;
+
+	private List<Game> listGames;
+
+	private TotalGames totalGames;
+
 }

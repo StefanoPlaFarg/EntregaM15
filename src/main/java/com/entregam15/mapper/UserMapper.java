@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+import org.bson.types.ObjectId;
 import org.springframework.stereotype.Component;
 
 import com.entregam15.dto.SignupRequestDTO;
@@ -28,8 +29,11 @@ public class UserMapper extends AbstractMapper<User, UserDTO>{
 	@Override
 	public UserDTO fromEntity(User entity) {
 		if (entity==null) return null;
+		
+		String id = entity.getId().toHexString();
+		
 		return UserDTO.builder()
-				.id(entity.getId())
+				.id(id)
 				.username(entity.getUserName())
 				.build();
 	}
@@ -37,8 +41,11 @@ public class UserMapper extends AbstractMapper<User, UserDTO>{
 	
 	public User fromDTO(UserDTO dto) {
 		if (dto==null) return null;
+		
+		ObjectId id =  new ObjectId (dto.getId()) ;         
+		
 		return User.builder()
-				.id(dto.getId())
+				.id(id)
 				.userName(dto.getUsername())
 				.build();
 	}

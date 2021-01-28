@@ -11,6 +11,7 @@ import java.util.Optional;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -103,7 +104,7 @@ public class UserService {
 	}
 	
 	//Get a User by his id
-	public User findById(Long id) {
+	public User findById(ObjectId id) {
 
 		try {
 
@@ -181,7 +182,9 @@ public class UserService {
 	//Authentificate a user
 	public LoginResponseDTO login(LoginRequestDTO loginRequestDTO) {
 		try {
-
+            
+			
+			//Find the user that mathces username and password with the loginrequestDTO
 			List<User> listExistingUsers = new ArrayList<User>();
 			User user = null;
 
@@ -233,8 +236,14 @@ public class UserService {
 		
 		Date now = new Date();
 		Date expirationDate = new Date (now.getTime() + (1000*60*60)); //Expiration time of token:  after one hour (1000 ms, 60 s/min, 60 min/h)
+		
+		String subject = user.getId().toString();
+		
+		System.out.println("subject: "+ subject);
+		
+		
 		return Jwts.builder()				
-				.setSubject(user.getId().toString())
+				.setSubject(subject)
 				.setIssuedAt(now)
 				.setExpiration(expirationDate)
 				.signWith(SignatureAlgorithm.HS512, jwtPassword)

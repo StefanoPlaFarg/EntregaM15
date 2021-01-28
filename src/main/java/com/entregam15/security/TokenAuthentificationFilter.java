@@ -12,6 +12,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -46,7 +47,9 @@ public class TokenAuthentificationFilter extends OncePerRequestFilter {
 			if (StringUtils.hasText(jwt) && userService.validateToken(jwt)) {//Validate the token
 				
 				//Get the user id from the token
-				Long idUserFromToken = Long.valueOf(userService.getUserIdFromToken(jwt)); 
+				ObjectId idUserFromToken = new ObjectId (userService.getUserIdFromToken(jwt));
+						
+					
                 
 				//Get the user by his id
 				User user = userRepository.findById(idUserFromToken)

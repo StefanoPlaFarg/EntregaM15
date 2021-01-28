@@ -4,9 +4,11 @@
 package com.entregam15.entity;
 
 
-import javax.persistence.*;
 
 
+import org.bson.types.ObjectId;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,24 +21,16 @@ import lombok.Setter;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-@Table(name="TOTAL_GAMES")
-/**
- * @author stefano
- *
- */
+
+
+@Document(collection = "RANKINGS")
 public class TotalGames {
-	
-	@Id
-	@Column(name="ID")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;	
-	
-	@OneToOne (fetch = FetchType.EAGER, optional = false)
-	@JoinColumn(name="FK_USER", nullable = false)
+
+	@Id 
+	private ObjectId id;
+
 	private User user;
-	
-	@Column(name="AVERAGE_SUCCESS", nullable = false)
+
 	private double averageSuccess;
 
 }

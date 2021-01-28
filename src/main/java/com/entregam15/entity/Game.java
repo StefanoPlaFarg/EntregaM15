@@ -8,9 +8,10 @@ package com.entregam15.entity;
  *
  */
 
-import javax.persistence.*;
 
-
+import org.bson.types.ObjectId;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,31 +24,20 @@ import lombok.Setter;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-@Table(name="GAMES")
+
+@Document(collection = "GAMES")
 public class Game {
 	
-	@Id
-	@Column(name="ID")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	
-		
-	@ManyToOne(fetch = FetchType.EAGER, optional = false)
-	@JoinColumn(name="FK_USER", nullable = false)
+	@Id private ObjectId id;
+
 	private User user;
-	
-	@Column(name="VALUE_FIRST_DICE", nullable = false)
+
 	private int valueFirstDice;
-	
-	@Column(name="VALUE_SECOND_DICE", nullable = false)
+
 	private int valueSecondDice;
-	
-	@Column(name="TOTAL_VALUE", nullable = false)
+
 	private int totalValue;
-	
-	@Column(name="GAME_WON", nullable = false)
+
 	private boolean gameWon;
-	
 
 }

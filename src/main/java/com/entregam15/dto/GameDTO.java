@@ -3,6 +3,8 @@
  */
 package com.entregam15.dto;
 
+import org.bson.types.ObjectId;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -16,7 +18,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class GameDTO {
 
-	private Long idGame;		
+	private ObjectId idGame;		
     private int valueFirstDice;	
 	private int valueSecondDice;	
 	private int totalValue;

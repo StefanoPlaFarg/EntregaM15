@@ -3,6 +3,8 @@
  */
 package com.entregam15.dto;
 
+import org.bson.types.ObjectId;
+
 /**
  * @author stefano
  *
@@ -19,6 +21,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserDTO {
-	private Long id;
+	private String id;
 	private String username;
 }

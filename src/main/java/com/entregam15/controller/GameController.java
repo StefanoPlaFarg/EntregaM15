@@ -10,6 +10,7 @@ package com.entregam15.controller;
 
 import java.util.List;
 
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -92,7 +93,7 @@ public class GameController {
 
 	//http://localhost:8080/api/v1/POST/players/1/games ---> (GET) User with iD = {id} plays a game
 	@PostMapping(value = "/POST/players/{id}/games")
-	public ResponseEntity<WrapperResponse<GameDTO>> play(@PathVariable(name = "id") Long id) {
+	public ResponseEntity<WrapperResponse<GameDTO>> play(@PathVariable(name = "id") ObjectId id) {
 
 		User user = userService.findById(id);
 
@@ -103,7 +104,7 @@ public class GameController {
 
 	//http://localhost:8080/api/v1/DELETE/players/1/games ---> (GET) User with iD = {id} delete all his games and rankings
 	@DeleteMapping(value = "/DELETE/players/{id}/games")
-	public ResponseEntity<?> deleteGames(@PathVariable(name = "id") Long id) {
+	public ResponseEntity<?> deleteGames(@PathVariable(name = "id") ObjectId id) {
 		
 		User user = userService.findById(id);
 		gameService.deleteAllGamesAndRankingByUser(user);
@@ -118,7 +119,7 @@ public class GameController {
 	public ResponseEntity<WrapperResponse<GamesUserDTO>> findAllGamesByUser(
 			@RequestParam(name = "pageNumber", required = false, defaultValue = "0") int pageNumber,
 			@RequestParam(name = "pageSize", required = false, defaultValue = "5") int pageSize,
-			@PathVariable(name="id") Long id){
+			@PathVariable(name="id") ObjectId id){
 		
 		Pageable page = PageRequest.of(pageNumber, pageSize);
 		User user = userService.findById(id);
