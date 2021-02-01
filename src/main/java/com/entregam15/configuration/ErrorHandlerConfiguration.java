@@ -18,7 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @ControllerAdvice
 
-//Handler for the tailored Exceptions
+//Handler for the tailored exceptions
 public class ErrorHandlerConfiguration extends ResponseEntityExceptionHandler{
 	
 	@ExceptionHandler(Exception.class)
