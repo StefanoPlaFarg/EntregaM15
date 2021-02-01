@@ -19,6 +19,8 @@ import com.entregam15.entity.User;
  *
  */
 
+
+//Convertidor de Entitites Games < ---- > a DTO
 @Component
 public class GameMapper extends AbstractMapper<Game, GameDTO> {
    

@@ -21,6 +21,8 @@ import com.entregam15.entity.User;
  * @author stefano
  *
  */
+
+//Convertidor de Entitites Rankings < ---- > a DTO
 @Component
 public class TotalGamesMapper extends AbstractMapper<TotalGames, TotalGamesDTO> {
 

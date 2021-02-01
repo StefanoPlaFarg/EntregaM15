@@ -18,11 +18,13 @@ import com.entregam15.entity.User;
  * @author stefano
  *
  */
+
+//Convertidor de Entitites User < ---- > a DTO
 @Component
 public class UserMapper extends AbstractMapper<User, UserDTO>{
    
 	private LocalDateTime registrationDate;
-	private static DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern ("dd-MM-yyyy HH:mm:ss");
+	//private static DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern ("dd-MM-yyyy HH:mm:ss");
 	
 	
 	@Override
@@ -53,7 +55,7 @@ public class UserMapper extends AbstractMapper<User, UserDTO>{
 
 		registrationDate = LocalDateTime.now();
 
-		if (dto.getUsername().isEmpty()) { //if the user doesnt provid a username, create 
+		if (dto.getUsername().isEmpty()) { //if the user doesnt provid a username, create it with "ANONIM"
 
 			username = "ANONIM";
 
