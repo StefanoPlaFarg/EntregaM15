@@ -4,7 +4,7 @@ Entrega M15 sobre Spring Boot, Spring Data i Spring Security amb JWT.
 ### Teoria
 S'ha aplicat la següent teoria apresa durant el curs:
 * Patrons de disseny: Singleton (Spring), Builder, MVC, Disseny per capes,  DTO, DAO, etc.
-* Principis i bones pràctiques:  CRUD, ús d'excepcions i DDD i SOLID (en la major mesura possible)
+* Principis i bones pràctiques:  CRUD, ús d'excepcions i DDD i SOLID (en la mesura del possible)
 * Patrons d'arquitectura: Microserveis
 * Llenguatge: s'ha usat Java 8 (lambdas i streams, optionals)
 
