@@ -184,7 +184,8 @@ public class UserService {
 
 			List<User> listExistingUsers = new ArrayList<User>();
 			User user = null;
-
+             
+			//Get all Users with the same username and which matches the password with the login information
 			listExistingUsers = userRepository.findAllByUserName(loginRequestDTO.getUsername());
 
 			if (listExistingUsers.size() == 0) {
