@@ -9,7 +9,7 @@ S'ha aplicat la següent teoria apresa durant el curs:
 * Llenguatge: s'ha usat Java 8 (lambdas i streams, optionals)
 
 ### Millores en un futur
-* Aplicar TDD i usant JUNIT5 i Mockito2
+* Aplicar TDD i usant Junit5 i Mockito2
 * Refactoring del codi
 * Creació d'excepcions per gestionar les no autoritzacions a certes APIS
 * Automatizació de tests amb Postman
