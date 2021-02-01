@@ -16,7 +16,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 
-//Wrapper of the object returned after processing the request
+//Wrapper of the object returned after processing the request by a Service Component
 public class WrapperResponse<T> {
 	private boolean requestHandled;
 	private String messageToReturn;
