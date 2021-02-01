@@ -1,0 +1,369 @@
+{
+	"info": {
+		"_postman_id": "234504fe-3950-4daf-a22e-3354936bf298",
+		"name": "EntregaM15_MongoDB+JWT",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "POST_CreateUser",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"username\": \"UsuariA\",\r\n    \"password\": \"1234\"  \r\n  \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/POST/players",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"POST",
+						"players"
+					]
+				},
+				"description": "Request per crear un usuari"
+			},
+			"response": []
+		},
+		{
+			"name": "POST_Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"UsuariA\",\r\n    \"password\": \"1234\"  \r\n  \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/POST/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"POST",
+						"login"
+					]
+				},
+				"description": "Request per fer loggin"
+			},
+			"response": []
+		},
+		{
+			"name": "PUT_UpdateUser",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI2MDEyZWY2M2Y3MjE0OTRkMzZjOWE1YWEiLCJpYXQiOjE2MTE4NjMxMzQsImV4cCI6MTYxMTg2NjczNH0.IqOzpcnCfjqUSK405FO5mWTPns2iaT_W_BpLkTc9RYnJ2mhQELNoOEqsEFCUU2RyWUB4Goi3-oOcLd0DcxGelQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": \"6012ef63f721494d36c9a5aa\",\r\n    \"username\": \"UsuariB\"   \r\n  \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/PUT/players",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"PUT",
+						"players"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST_PlayAGame",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI2MDEzMTRmYmMwZWJmYzA0MzI3YWU1YzkiLCJpYXQiOjE2MTE4NjMzMTYsImV4cCI6MTYxMTg2NjkxNn0.L7JpaBVkb8SDTiW1WjkwBLHPAOsT8KBItsH6FhJMM_DV5FZkNJvt2Xteq8iWsY31YyKCLRfjFJtoGrxCe5HJcQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/POST/players/601314fbc0ebfc04327ae5c9/games",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"POST",
+						"players",
+						"601314fbc0ebfc04327ae5c9",
+						"games"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE_AllGamesOfAUser",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI2MDEyODkxNjg4N2U5NTYzZjJjYzE0OTgiLCJpYXQiOjE2MTE4NTA1OTUsImV4cCI6MTYxMTg1NDE5NX0.WJ7twrOZzN8Looj1pkkCP7ZCaEDv8maRXccjI8bKtAHWtxX0H8MvOwwOIQxQPrfF4S95rEu2ll5bU8zdn3CFWQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/DELETE/players/601314fbc0ebfc04327ae5c9/games",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"DELETE",
+						"players",
+						"601314fbc0ebfc04327ae5c9",
+						"games"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET_AllRankingsOfAllUsers",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI2MDEzMTRmYmMwZWJmYzA0MzI3YWU1YzkiLCJpYXQiOjE2MTE4NjMzMTYsImV4cCI6MTYxMTg2NjkxNn0.L7JpaBVkb8SDTiW1WjkwBLHPAOsT8KBItsH6FhJMM_DV5FZkNJvt2Xteq8iWsY31YyKCLRfjFJtoGrxCe5HJcQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/GET/players?pageNumber=0&pageSize=10",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"GET",
+						"players"
+					],
+					"query": [
+						{
+							"key": "pageNumber",
+							"value": "0"
+						},
+						{
+							"key": "pageSize",
+							"value": "10"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET_AllGamesOfAUser",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI2MDEzMTRmYmMwZWJmYzA0MzI3YWU1YzkiLCJpYXQiOjE2MTE4NjMzMTYsImV4cCI6MTYxMTg2NjkxNn0.L7JpaBVkb8SDTiW1WjkwBLHPAOsT8KBItsH6FhJMM_DV5FZkNJvt2Xteq8iWsY31YyKCLRfjFJtoGrxCe5HJcQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/GET/players/601314fbc0ebfc04327ae5c9/games?pageNumber=0&pageSize=10",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"GET",
+						"players",
+						"601314fbc0ebfc04327ae5c9",
+						"games"
+					],
+					"query": [
+						{
+							"key": "pageNumber",
+							"value": "0"
+						},
+						{
+							"key": "pageSize",
+							"value": "10"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET_AverageRankingOfAllUsers",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI2MDEyODkxNjg4N2U5NTYzZjJjYzE0OTgiLCJpYXQiOjE2MTE4NTA1OTUsImV4cCI6MTYxMTg1NDE5NX0.WJ7twrOZzN8Looj1pkkCP7ZCaEDv8maRXccjI8bKtAHWtxX0H8MvOwwOIQxQPrfF4S95rEu2ll5bU8zdn3CFWQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/GET/players/ranking",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"GET",
+						"players",
+						"ranking"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET_Loser",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI2MDEzMTRmYmMwZWJmYzA0MzI3YWU1YzkiLCJpYXQiOjE2MTE4NjMzMTYsImV4cCI6MTYxMTg2NjkxNn0.L7JpaBVkb8SDTiW1WjkwBLHPAOsT8KBItsH6FhJMM_DV5FZkNJvt2Xteq8iWsY31YyKCLRfjFJtoGrxCe5HJcQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/GET/players/ranking/loser",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"GET",
+						"players",
+						"ranking",
+						"loser"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET_Winner",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI2MDEzMTRmYmMwZWJmYzA0MzI3YWU1YzkiLCJpYXQiOjE2MTE4NjMzMTYsImV4cCI6MTYxMTg2NjkxNn0.L7JpaBVkb8SDTiW1WjkwBLHPAOsT8KBItsH6FhJMM_DV5FZkNJvt2Xteq8iWsY31YyKCLRfjFJtoGrxCe5HJcQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/GET/players/ranking/winner",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"GET",
+						"players",
+						"ranking",
+						"winner"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
