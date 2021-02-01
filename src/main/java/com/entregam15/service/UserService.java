@@ -1,29 +1,23 @@
-/**
- * 
- */
+
 package com.entregam15.service;
 
-import java.time.LocalDateTime;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
+
 
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+
 
 import com.entregam15.dto.LoginRequestDTO;
 import com.entregam15.dto.LoginResponseDTO;
-import com.entregam15.dto.UserDTO;
+
 import com.entregam15.entity.*;
 import com.entregam15.exception.*;
 import com.entregam15.mapper.UserMapper;
