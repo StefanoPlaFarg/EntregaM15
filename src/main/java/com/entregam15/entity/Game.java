@@ -3,11 +3,6 @@
  */
 package com.entregam15.entity;
 
-/**
- * @author stefano
- *
- */
-
 
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
