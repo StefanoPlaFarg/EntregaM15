@@ -28,6 +28,7 @@ import com.entregam15.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
+//Configuration JWT
 public class TokenAuthentificationFilter extends OncePerRequestFilter {
 
 	@Autowired

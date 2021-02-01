@@ -20,6 +20,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 
+//Configuration JWT
 //Wrapper of User and used for Spring Security to manage authorized users
 public class UserPrincipal implements UserDetails {
 	
