@@ -20,7 +20,7 @@ import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 
-
+//Configuration of Swagger
 @Configuration
 @EnableSwagger2
 public class SwaggerConfig{
@@ -30,14 +30,14 @@ public class SwaggerConfig{
 		return new Docket(DocumentationType.SWAGGER_2)
 				.globalOperationParameters(Arrays.asList(
 						new ParameterBuilder().
-							name("Authorization")
+							name("Authorization") //Let introduce parameters to use the API correctly on Swagger. In this case the authentication
 							.description("Authentication token").modelRef(new ModelRef("string"))
 							.parameterType("header")
 							.required(false)
 							.build()
 						))
 				.select()
-				.apis(RequestHandlerSelectors.basePackage("com.entregam15.controller"))
+				.apis(RequestHandlerSelectors.basePackage("com.entregam15.controller"))//analyze this package to to fetch the APIs
 				.paths(PathSelectors.any())
 				.build()
 				.apiInfo(getApiInfo())
