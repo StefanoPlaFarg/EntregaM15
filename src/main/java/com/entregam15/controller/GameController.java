@@ -74,7 +74,11 @@ public class GameController {
 		
 		User userToUpdate = userMapper.fromDTO(userDTO);
 	
+		gameService.updateUser(userToUpdate);
+		
 		User userUpdated = userService.updateUser(userToUpdate);
+		
+		
 		
 		return new WrapperResponse<>(true, "success", userMapper.fromEntity(userUpdated)).createResponse();
 	}
@@ -119,69 +123,73 @@ public class GameController {
 	
 	
 	
-	//http://localhost:8080/api/v1/GET/players/1/games?pageNumber=0&pageSize=10 ---> (GET) User with iD = {id} gets a set all his games (with a specified Page)
+	// http://localhost:8080/api/v1/GET/players/1/games?pageNumber=0&pageSize=10
+	// ---> (GET) User with iD = {id} gets a set all his games (with a specified
+	// Page)
 	@GetMapping(value = "/GET/players/{id}/games")
 	public ResponseEntity<WrapperResponse<GamesUserDTO>> findAllGamesByUser(
 			@RequestParam(name = "pageNumber", required = false, defaultValue = "0") int pageNumber,
 			@RequestParam(name = "pageSize", required = false, defaultValue = "5") int pageSize,
-			@PathVariable(name="id") ObjectId id){
-		
+			@PathVariable(name = "id") ObjectId id) {
+
 		Pageable page = PageRequest.of(pageNumber, pageSize);
 		User user = userService.findById(id);
-		
-		List<Game> listGamesByUser =gameService.findAllGamesByUser(user, page);
+
+		List<Game> listGamesByUser = gameService.findAllGamesByUser(user, page);
 		return new WrapperResponse<>(true, "success", gameMapper.fromAllEntitiesByUser(user, listGamesByUser))
 				.createResponse();
 	}
-	
-	
-	
-	
-	//http://localhost:8080/api/v1/GET/players?pageNumber=0&pageSize=10 -----> (GET) all Rankings of all Users
+
+	// http://localhost:8080/api/v1/GET/players?pageNumber=0&pageSize=10 ----->
+	// (GET) all Rankings of all Users
 	@GetMapping(value = "/GET/players")
 	public ResponseEntity<WrapperResponse<TotalAverageGamesDTO>> findAllRankings(
 			@RequestParam(name = "pageNumber", required = false, defaultValue = "0") int pageNumber,
-			@RequestParam(name = "pageSize", required = false, defaultValue = "5") int pageSize
-			){
-		
+			@RequestParam(name = "pageSize", required = false, defaultValue = "5") int pageSize) {
+
 		Pageable page = PageRequest.of(pageNumber, pageSize);
-		
-		List<User> existingUsersWithGames = userService.findAllUsersWithGames();
-		
-		List<TotalGames> listTotalGames =gameService.findGroupRankings(page, existingUsersWithGames);
+
+		List<User> existingUsers = userService.findAllUsers();
+
+		List<TotalGames> listTotalGames = gameService.findGroupRankings(page, existingUsers);
 		return new WrapperResponse<>(true, "success", totalGamesMapper.fromAllTotalGamesEntities(listTotalGames))
 				.createResponse();
 	}
-	
-	
-	//http://localhost:8080/api/v1/GET/players/ranking ----> (GET) Average ranking of all users
+
+	// http://localhost:8080/api/v1/GET/players/ranking ----> (GET) Average ranking
+	// of all users
 	@GetMapping(value = "/GET/players/ranking")
-      public ResponseEntity<WrapperResponse<AverageRankingDTO>> findAverageRanking() {
-		
-		List<User> existingUsersWithGames = userService.findAllUsersWithGames();
-		double averageRanking = gameService.findAverageRanking(existingUsersWithGames);
-		
-		return new WrapperResponse<>(true, "success", totalGamesMapper.fromAverageRanking(averageRanking)).createResponse();
+	public ResponseEntity<WrapperResponse<AverageRankingDTO>> findAverageRanking() {
+
+		List<User> existingUsers = userService.findAllUsers();
+
+		double averageRanking = gameService.findAverageRanking(existingUsers);
+
+		return new WrapperResponse<>(true, "success", totalGamesMapper.fromAverageRanking(averageRanking))
+				.createResponse();
 	}
 
-	//http://localhost:8080/api/v1/GET/players/ranking/loser ----> (GET) User with worst ranking
+	// http://localhost:8080/api/v1/GET/players/ranking/loser ----> (GET) User with
+	// worst ranking
 	@GetMapping(value = "/GET/players/ranking/loser")
 	public ResponseEntity<WrapperResponse<UserDTO>> findLoser() {
 
-		List<User> existingUsersWithGames = userService.findAllUsersWithGames();
-		
-		User loser = gameService.findLoser(existingUsersWithGames);
+		List<User> existingUsers = userService.findAllUsers();
+
+		User loser = gameService.findLoser(existingUsers);
 
 		return new WrapperResponse<>(true, "success", userMapper.fromEntity(loser)).createResponse();
 	}
-	
-	//http://localhost:8080/api/v1/GET/players/ranking/loser ----> (GET) User with best ranking
+
+	// http://localhost:8080/api/v1/GET/players/ranking/loser ----> (GET) User with
+	// best ranking
 	@GetMapping(value = "/GET/players/ranking/winner")
 	public ResponseEntity<WrapperResponse<UserDTO>> findWinner() {
-     
-		List<User> existingUsersWithGames = userService.findAllUsersWithGames();
-		User winner = gameService.findWinner(existingUsersWithGames);
-		
+
+		List<User> existingUsers = userService.findAllUsers();
+
+		User winner = gameService.findWinner(existingUsers);
+
 		return new WrapperResponse<>(true, "success", userMapper.fromEntity(winner)).createResponse();
 	}
 

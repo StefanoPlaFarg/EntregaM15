@@ -46,8 +46,8 @@ public class User {
 
 	private LocalDateTime registrationDate;
 
-	private List<Game> listGames;
+	//private List<Game> listGames; //Not necessary anymore with MongoDB
 
-	private TotalGames totalGames;
+	//private TotalGames totalGames; //Not necessary anymore with MongoDB
 
 }

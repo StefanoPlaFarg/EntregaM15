@@ -25,12 +25,15 @@ public class GameMapper extends AbstractMapper<Game, GameDTO> {
 	@Override
 	public GameDTO fromEntity(Game entity) {
 		if (entity==null) return null;
+		
+		String id = entity.getId().toHexString();
+		
 		return GameDTO.builder()
 				.valueFirstDice(entity.getValueFirstDice())
                 .valueSecondDice(entity.getValueSecondDice())
 				.totalValue(entity.getTotalValue())
 				.gameWon(entity.isGameWon())
-				.idGame(entity.getId())
+				.idGame(id)
 				.build();
 	}
 	
