@@ -16,7 +16,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import com.entregam15.security.RestAuthenticationEntryPoint;
 import com.entregam15.security.TokenAuthentificationFilter;
 
-
+//Configuration JWT
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
