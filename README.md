@@ -10,6 +10,7 @@ S'ha aplicat la següent teoria apresa durant el curs:
 
 ### Millores en un futur
 * Aplicar TDD i usant Junit5 i Mockito2
+* Aplicar principi HATEOAS
 * Refactoring del codi
 * Creació d'excepcions per gestionar les no autoritzacions a certes APIS
 * Automatizació de tests amb Postman
